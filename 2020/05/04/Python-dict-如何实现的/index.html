@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Python  dict 如何实现的 | Stay hungry, stay foolish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是字典字典是一系列由键（key）和值（value）配对组成的元素的集合。字典是一个可变容器模型，可以存储任意类型对象。字典实现与哈希算法密不可分（不同的Python版本，算法会不同），不了解哈希算法的童鞋可以先去了解相关知识。 字典是否是有序的在Python3.6之前，字典是无序的，但是Python3.7+，字典是有序的。在3.6中，字典有序是一个implementation detail，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python  dict 如何实现的">
+<meta property="og:url" content="https://hackerman-ops.github.io/blog/2020/05/04/Python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/index.html">
+<meta property="og:site_name" content="Stay hungry, stay foolish">
+<meta property="og:description" content="什么是字典字典是一系列由键（key）和值（value）配对组成的元素的集合。字典是一个可变容器模型，可以存储任意类型对象。字典实现与哈希算法密不可分（不同的Python版本，算法会不同），不了解哈希算法的童鞋可以先去了解相关知识。 字典是否是有序的在Python3.6之前，字典是无序的，但是Python3.7+，字典是有序的。在3.6中，字典有序是一个implementation detail，在">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-04T07:39:02.000Z">
+<meta property="article:modified_time" content="2020-05-04T10:36:57.991Z">
+<meta property="article:author" content="wuguobin">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Stay hungry, stay foolish" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Stay hungry, stay foolish</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://hackerman-ops.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python-dict-如何实现的" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/04/Python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/" class="article-date">
+  <time datetime="2020-05-04T07:39:02.000Z" itemprop="datePublished">2020-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python  dict 如何实现的
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是字典"><a href="#什么是字典" class="headerlink" title="什么是字典"></a>什么是字典</h2><p>字典是一系列由键（key）和值（value）配对组成的元素的集合。字典是一个可变容器模型，可以存储任意类型对象。字典实现与哈希算法密不可分（不同的Python版本，算法会不同），不了解哈希算法的童鞋可以先去了解相关知识。</p>
+<h2 id="字典是否是有序的"><a href="#字典是否是有序的" class="headerlink" title="字典是否是有序的"></a>字典是否是有序的</h2><p>在Python3.6之前，字典是无序的，但是Python3.7+，字典是有序的。在3.6中，字典有序是一个implementation detail，在3.7才正式成为语言特性，因此3.6中无法确保100%有序。</p>
+<h2 id="字典的查询、添加、删除的时间复杂度"><a href="#字典的查询、添加、删除的时间复杂度" class="headerlink" title="字典的查询、添加、删除的时间复杂度"></a>字典的查询、添加、删除的时间复杂度</h2><p>字典的查询、添加、删除的平均时间复杂度都是O(1)（为什么是平均时间复杂度，文章后面会讲解到），相比列表与元祖，性能更优。</p>
+<h2 id="字典的实现原理"><a href="#字典的实现原理" class="headerlink" title="字典的实现原理"></a>字典的实现原理</h2><p><strong>Python3.6之前的无序字典</strong></p>
+<p>字典底层是维护一张哈希表（见下图），我们可以把哈希表看成一个列表，哈希表中的每一个元素又存储了哈希值（hash）、键（key）、值（value）3个元素。（Python3.6之前）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enteies &#x3D; [</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [hash, key, value],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [hash, key, value],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>由上可以见哈希表的存储结构，我们也可以看出，元素之间有一些空元素，我们通过增加一个元素来讲解具体实现。</p>
+<ul>
+<li>计算key的hash值【hash(key)】，再和mask做与操作【mask=字典最小长度（DictMinSize） - 1】，运算后会得到一个数字【index】，这个index就是要插入的enteies哈希表中的下标位置</li>
+<li>若index下标位置已经被占用，则会判断enteies的key是否与要插入的key是否相等</li>
+<li>如果key相等就表示key已存在，则更新value值</li>
+<li>如果key不相等，就表示hash冲突，则会继续向下寻找空位置，一直到找到剩余空位为止。</li>
+</ul>
+<p>以上介绍了老字典的实现过程，下面我们带入具体的数值来介绍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 给字典添加一个值，key为hello，value为word</span><br><span class="line">my_dict[&#39;hello&#39;] &#x3D; &#39;word&#39;</span><br><span class="line"></span><br><span class="line"># 假设是一个空列表，hash表初始如下</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">hash_value &#x3D; hash(&#39;hello&#39;)  # 假设值为 12343543 注：以下计算值不等于实际值，仅为演示使用</span><br><span class="line">index &#x3D; hash_value &amp; ( len(enteies) - 1)  # 假设index值计算后等于3，具体的hash算法本文不做介绍</span><br><span class="line"></span><br><span class="line"># 下面会将值存在enteies中</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [12343543, &#39;hello&#39;, &#39;word&#39;],  # index&#x3D;3</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 我们继续向字典中添加值</span><br><span class="line">my_dict[&#39;color&#39;] &#x3D; &#39;green&#39;</span><br><span class="line"></span><br><span class="line">hash_value &#x3D; hash(&#39;color&#39;)  # 假设值为 同样为12343543</span><br><span class="line">index &#x3D; hash_value &amp; ( len(enteies) - 1)  # 假设index值计算后同样等于3</span><br><span class="line"></span><br><span class="line"># 下面会将值存在enteies中</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [&#39;--&#39;, &#39;--&#39;, &#39;--&#39;],</span><br><span class="line">    [12343543, &#39;hello&#39;, &#39;word&#39;],  # 由于index&#x3D;3的位置已经被占用，且key不一样，所以判定为hash冲突，继续向下寻找</span><br><span class="line">    [12343543, &#39;color&#39;, &#39;green&#39;],  # 找到空余位置，则保存</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的讲解，已经了解了字典的插入的过程，可以更具此过程分析出字典查找、插入的执行过程，这里就不过多赘述。我们可以看到，不同的key计算的出的index值是不一样的，在enteies中插入的位置不一样，所以当我们遍历字典的时候，字段的顺序与我们插入的顺序是不相同的。</p>
+<p>我们同样可以发现，enteies表是稀疏的，随着我们插入的值不同，enteies表会越来越稀疏（enteies也是一个会动态扩展长度的，每一此扩展长度，都会重新计算所有key的hash值），所以新的字典实现就随之出现。</p>
+<p> <strong>Python3.7+后的新的实现方式</strong></p>
+<p>老字典使用一张hash，而新字典还使用了一张Indices表来辅助。下来列出新的结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">indices &#x3D; [None, None, index, None, index, None, index]</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [hash0, key0, value0],</span><br><span class="line">    [hash1, key1, value1],</span><br><span class="line">    [hash2, key2, value2]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>下面为具体的实现过程：</p>
+<ul>
+<li>计算key的hash值【hash(key)】，再和mask做与操作【mask=字典最小长度（IndicesDictMinSize） - 1】，运算后会得到一个数字【index】，这个index就是要插入的indices的下标位置（注：具体算法与Python版本相关，并不一定一样）</li>
+<li>得到index后，会找到indices的位置，但是此位置不是存的hash值，而是存的len(enteies)，表示该值在enteies中的位置</li>
+<li>如果出现hash冲突，则处理方式与老字典处理方式类似</li>
+</ul>
+<p>下面带入实际实现过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 给字典添加一个值，key为hello，value为word</span><br><span class="line">my_dict[&#39;hello&#39;] &#x3D; &#39;word&#39;</span><br><span class="line"></span><br><span class="line"># 假设是一个空列表，hash表初始如下</span><br><span class="line">indices &#x3D; [None, None, None, None, None, None]</span><br><span class="line">enteies &#x3D; []</span><br><span class="line"></span><br><span class="line">hash_value &#x3D; hash(&#39;hello&#39;)  # 假设值为 12343543</span><br><span class="line">index &#x3D; hash_value &amp; ( len(indices) - 1)  # 假设index值计算后等于3，具体的hash算法本文不做介绍</span><br><span class="line"></span><br><span class="line"># 会找到indices的index为3的位置，并插入enteies的长度</span><br><span class="line">indices &#x3D; [None, None, None, 0, None, None]</span><br><span class="line"># 此时enteies会插入第一个元素</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [12343543, &#39;hello&#39;, &#39;word&#39;]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"># 我们继续向字典中添加值</span><br><span class="line">my_dict[&#39;haimeimei&#39;] &#x3D; &#39;lihua&#39;</span><br><span class="line"></span><br><span class="line">hash_value &#x3D; hash(&#39;haimeimei&#39;)  # 假设值为 34323545</span><br><span class="line">index &#x3D; hash_value &amp; ( len(indices) - 1)  # 假设index值计算后同样等于 0</span><br><span class="line"></span><br><span class="line"># 会找到indices的index为0的位置，并插入enteies的长度</span><br><span class="line">indices &#x3D; [1, None, None, 0, None, None]</span><br><span class="line"># 此时enteies会插入第一个元素</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [12343543, &#39;hello&#39;, &#39;word&#39;],</span><br><span class="line">    [34323545, &#39;haimeimei&#39;, &#39;lihua&#39;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>我们在来看一下查询字典的具体过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 下面是一个字典与字典的存储</span><br><span class="line">more_dict &#x3D; &#123;&#39;name&#39;: &#39;张三&#39;, &#39;sex&#39;: &#39;男&#39;, &#39;age&#39;: 10, &#39;birth&#39;: &#39;2019-01-01&#39;&#125;</span><br><span class="line"></span><br><span class="line"># 数据实际存储</span><br><span class="line">indices &#x3D; [None, 2, None, 0, None, None, 1, None, 3]</span><br><span class="line">enteies &#x3D; [</span><br><span class="line">    [34353243, &#39;name&#39;, &#39;张三&#39;],</span><br><span class="line">    [34354545, &#39;sex&#39;, &#39;男&#39;],</span><br><span class="line">    [23343199, &#39;age&#39;, 10],</span><br><span class="line">    [00956542, &#39;birth&#39;, &#39;2019-01-01&#39;],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">print(more_dict[&#39;age&#39;])  # 当我们执行这句时</span><br><span class="line"></span><br><span class="line">hash_value &#x3D; hash(&#39;age&#39;)  # 假设值为 23343199</span><br><span class="line">index &#x3D; hash_value &amp; ( len(indices) - 1)  # index &#x3D; 1</span><br><span class="line"></span><br><span class="line">entey_index &#x3D; indices[1]  # 数据在enteies的位置是2</span><br><span class="line">value &#x3D; enteies[entey_index]  # 所以找到值为 enteies[2]</span><br></pre></td></tr></table></figure>
+
+<p>由上可以看出，新字典存储数据本身的enteies并不会稀疏，由indices来维护具体存储的位置，enteies中的数据是和插入的数据是一样的，所以新的字典是有序的。</p>
+<p>上面的例子没有说明冲突的解决方案，大家可以自己思考思考。</p>
+<h2 id="时间复杂度说明"><a href="#时间复杂度说明" class="headerlink" title="时间复杂度说明"></a>时间复杂度说明</h2><p>我们在上面提到了，字典的平均时间复杂度是O(1)，因为字典是通过哈希算法来实现的，哈希算法不可避免的问题就是hash冲突，Python字典发生哈希冲突时，会向下寻找空余位置，直到找到位置。如果在计算key的hash值时，如果一直找不到空余位置，则字典的时间复杂度就变成了O(n)了，所以Python的哈希算法就显得非常重要了。Python字典的哈希算法，会尽量保证哈希值计算出的index是平均分布且每一个值之间有剩余位置，例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[index, None, None, None, index, None, None, None]</span><br></pre></td></tr></table></figure>
+
+<p>及index尽量只为 0, 3, 5, 7类似值，保证在发生哈希冲突时，能很快的找到空余位置。</p>
+<h2 id="字典的key能使用什么值？"><a href="#字典的key能使用什么值？" class="headerlink" title="字典的key能使用什么值？"></a>字典的key能使用什么值？</h2><p>Python字典的key可以使用字符串（str），整型（int），元祖（tuple）等。我们已经知道，字典是通过哈希算法来计算key的值，所以key必须为可哈希的，list不能作为字典的key，因为list是可变的及不可哈希的对象，所以不能作为字典的key。</p>
+<p><a href="https://blog.zthxxx.me/post/python-dictionary-implementation/#%E7%A2%B0%E6%92%9E" target="_blank" rel="noopener">引用</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/04/Python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/" data-id="ck9trxyon00016gnv1jjd2834" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2020/05/04/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          散列表冲突
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2020/05/04/celery/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">celery</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/first-blog/" rel="tag">first blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/nosql/" rel="tag">nosql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python-web/" rel="tag">python web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%BC%82%E6%AD%A5%E6%A1%86%E6%9E%B6/" rel="tag">异步框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/first-blog/" style="font-size: 10px;">first blog</a> <a href="/blog/tags/linux/" style="font-size: 10px;">linux</a> <a href="/blog/tags/nosql/" style="font-size: 10px;">nosql</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/python-web/" style="font-size: 10px;">python web</a> <a href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 10px;">中间件</a> <a href="/blog/tags/%E5%BC%82%E6%AD%A5%E6%A1%86%E6%9E%B6/" style="font-size: 10px;">异步框架</a> <a href="/blog/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/blog/tags/%E8%BF%90%E7%BB%B4/" style="font-size: 10px;">运维</a> <a href="/blog/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/05/04/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/">Django 中间件</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/04/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/">惊群效应</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/04/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/">散列表冲突</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/04/Python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/">Python  dict 如何实现的</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/04/celery/">celery</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wuguobin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

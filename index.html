@@ -68,6 +68,201 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql-基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2020-05-10T12:52:19.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">mysql 基本操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#39;newuser&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;password&#39;;</span><br><span class="line">GRANT ALL PRIVILEGES ON * . * TO &#39;newuser&#39;@&#39;localhost&#39;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<h2 id="How-To-Grant-Different-User-Permissions"><a href="#How-To-Grant-Different-User-Permissions" class="headerlink" title="How To Grant Different User Permissions"></a>How To Grant Different User Permissions</h2><p>Here is a short list of other common possible permissions that users can enjoy.</p>
+<ul>
+<li>ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)</li>
+<li>CREATE- allows them to create new tables or databases</li>
+<li>DROP- allows them to them to delete tables or databases</li>
+<li>DELETE- allows them to delete rows from tables</li>
+<li>INSERT- allows them to insert rows into tables</li>
+<li>SELECT- allows them to use the <code>SELECT</code> command to read through databases</li>
+<li>UPDATE- allow them to update table rows</li>
+<li>GRANT OPTION- allows them to grant or remove other users’ privileges</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT type_of_permission ON database_name.table_name TO ‘username’@&#39;localhost’;</span><br></pre></td></tr></table></figure>
+
+<p>To provide a specific user with a permission, you can use this framework:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT type_of_permission ON database_name.table_name TO ‘username’@&#39;localhost’;</span><br></pre></td></tr></table></figure>
+
+<p>If you want to give them access to any database or to any table, make sure to put an asterisk (*) in the place of the database name or table name.</p>
+<p>Each time you update or change a permission be sure to use the Flush Privileges command.</p>
+<p>If you need to revoke a permission, the structure is almost identical to granting it:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE type_of_permission ON database_name.table_name FROM ‘username’@‘localhost’;</span><br></pre></td></tr></table></figure>
+
+<p>Note that when revoking permissions, the syntax requires that you use <code>FROM</code>, instead of <code>TO</code> as we used when granting permissions.</p>
+<p>You can review a user’s current permissions by running the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW GRANTS username;</span><br></pre></td></tr></table></figure>
+
+<p>Just as you can delete databases with DROP, you can use DROP to delete a user altogether:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER ‘username’@‘localhost’;</span><br></pre></td></tr></table></figure>
+
+<p>To test out your new user, log out by typing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
+
+<p>and log back in with this command in terminal:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u [username] -p</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" data-id="cka13eryb00055ei04sas3xyj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-数据库ACID" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/" class="article-date">
+  <time datetime="2020-05-10T06:24:32.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/">数据库ACID</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>定义：所谓事务，它是一个操作序列，这些操作要么都执行，要么都不执行，它是一个不可分割的工作单位。</p>
+<p>准备工作：为了说明事务的ACID原理，我们使用银行账户及资金管理的案例进行分析。</p>
+<h2 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h2><p>ACID，是指在可靠数据库管理系统（DBMS）中，事务(transaction)所应该具有的四个特性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）</p>
+<h3 id="A"><a href="#A" class="headerlink" title="A"></a>A</h3><p> 原子性是指事务是一个不可再分割的工作单位，事务中的操作要么都发生，要么都不发生。</p>
+<p>保障事务的原子性是数据库管理系统的责任，为此许多数据源采用日志机制。例如，SQL Server使用一个预写事务日志，在将数据提交到实际数据页面前，先写在事务日志上。</p>
+<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><p>一致性是指在事务开始之前和事务结束以后，数据库的完整性约束没有被破坏。这是说数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。</p>
+<p>如何保证：</p>
+<p>数据库机制层面</p>
+<p>​    数据库层面的一致性是，在一个事务执行之前和之后，数据会符合你设置的约束（唯一约束，外键约束,Check约束等)和触发器设置。这一点是由SQL SERVER进行保证的。比如转账，则可以使用CHECK约束两个账户之和等于2000来达到一致性目的</p>
+<p>业务层面</p>
+<p>  对于业务层面来说，一致性是保持业务的一致性。这个业务一致性需要由开发人员进行保证。当然，很多业务方面的一致性，也可以通过转移到数据库机制层面进行保证。</p>
+<h3 id="I"><a href="#I" class="headerlink" title="I"></a>I</h3><p>多个事务并发访问时，事务之间是隔离的，一个事务不应该影响其它事务运行效果。</p>
+<p>这指的是在并发环境中，当不同的事务同时操纵相同的数据时，每个事务都有各自的完整数据空间。由并发事务所做的修改必须与任何其他并发事务所做的修改隔离。事务查看数据更新时，数据所处的状态要么是另一事务修改它之前的状态，要么是另一事务修改它之后的状态，事务不会查看到中间状态的数据。</p>
+<p> 事务之间的相互影响分为几种，分别为：脏读，不可重复读，幻读，丢失更新</p>
+<ul>
+<li><p>脏读</p>
+<p>一个事务读取了另一个事务未提交的数据，而这个数据是有可能回滚的</p>
+</li>
+<li><p>不可重复读</p>
+<p>在数据库访问中，一个事务范围内两个相同的查询却返回了不同数据。这是由于查询时系统中其他事务修改的提交而引起的。</p>
+</li>
+<li><p>丢失更新</p>
+<p>两个事务同时读取同一条记录，A先修改记录，B也修改记录（B是不知道A修改过），B提交数据后B的修改结果覆盖了A的修改结果。</p>
+</li>
+</ul>
+<h3 id="理解SQL-SERVER中的隔离级别"><a href="#理解SQL-SERVER中的隔离级别" class="headerlink" title="理解SQL SERVER中的隔离级别"></a>理解SQL SERVER中的隔离级别</h3><p>数据库的事务隔离级别（TRANSACTION ISOLATION LEVEL）是一个数据库上很基本的一个概念。为什么会有事务隔离级别，SQL Server上实现了哪些事务隔离级别？事务隔离级别的前提是一个多用户、多进程、多线程的并发系统，在这个系统中为了保证数据的一致性和完整性，我们引入了事务隔离级别这个概念，对一个单用户、单线程的应用来说则不存在这个问题。</p>
+<p>  为了避免上述几种事务之间的影响，SQL Server通过设置不同的隔离级别来进行不同程度的避免。因为高的隔离等级意味着更多的锁，从而牺牲性能。所以这个选项开放给了用户根据具体的需求进行设置。不过默认的隔离级别Read Commited符合了多数的实际需求.</p>
+<table>
+<thead>
+<tr>
+<th><strong>隔离级别</strong></th>
+<th><strong>脏读</strong></th>
+<th><strong>丢失更新</strong></th>
+<th><strong>不可重复读</strong></th>
+<th><strong>幻读</strong></th>
+<th><strong>并发模型</strong></th>
+<th><strong>更新冲突检测</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>未提交读：Read Uncommited</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>悲观</td>
+<td>否</td>
+</tr>
+<tr>
+<td>已提交读：Read commited</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>悲观</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可重复读：Repeatable Read</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>悲观</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可串行读：Serializable</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>悲观</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>SQL Server隔离事务之间的影响是通过锁来实现的，通过阻塞来阻止上述影响。不同的隔离级别是通过加不同的锁，造成阻塞来实现的，所以会以付出性能作为代价；安全级别越高，处理效率越低；安全级别越低，效率高。</p>
+<p>​    <strong><em>\</em>使用方法：**</strong>SET TRANSACTIONISOLATION LEVEL REPEATABLE READ</p>
+<p>​    <strong><em>\</em>未提交读：**</strong> 在读数据时不会检查或使用任何锁。因此，在这种隔离级别中可能读取到没有提交的数据。 </p>
+<p>​    <strong><em>\</em>已提交读：**</strong>只读取提交的数据并等待其他事务释放排他锁。读数据的共享锁在读操作完成后立即释放。已提交读是SQL Server的默认隔离级别。 </p>
+<p>​    <strong><em>\</em>可重复读：**</strong> 像已提交读级别那样读数据，但会保持共享锁直到事务结束。 </p>
+<p>​    <strong>可串行读：</strong>工作方式类似于可重复读。但它不仅会锁定受影响的数据，还会锁定这个范围。这就阻止了新数据插入查询所涉及的范围。</p>
+<h2 id="D"><a href="#D" class="headerlink" title="D"></a>D</h2><p>意味着在事务完成以后，该事务所对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。    </p>
+<p>即使出现了任何事故比如断电等，事务一旦提交，则持久化保存在数据库中。</p>
+<p>​    SQL SERVER通过write-ahead transaction log来保证持久性。write-ahead transaction log的意思是，事务中对数据库的改变在写入到数据库之前，首先写入到事务日志中。而事务日志是按照顺序排号的（LSN）。当数据库崩溃或者服务器断点时，重启动SQL SERVER，SQLSERVER首先会检查日志顺序号，将本应对数据库做更改而未做的部分持久化到数据库，从而保证了持久性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/" data-id="cka13eryj000f5ei08i3kd21l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-linux-如何查看python-调用栈" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/" class="article-date">
@@ -171,7 +366,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/" data-id="cka0lxuju0004gsi0gz28cudi" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/" data-id="cka13ery900045ei07cx1fhaj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -233,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/" data-id="cka0lxuk0000dgsi0btig2h7p" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/" data-id="cka13erym000h5ei03lujcxvb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
@@ -464,7 +659,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/redis/" data-id="cka0lxul1000qgsi0dk400cii" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/redis/" data-id="cka13erz4000w5ei0a1sx18zw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li></ul>
@@ -534,7 +729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/rabbitmq/" data-id="cka0lxujw0008gsi0567yghrm" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/rabbitmq/" data-id="cka13erye00095ei03km40ank" class="article-share-link">Share</a>
       
       
     </footer>
@@ -571,7 +766,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/celery/" data-id="cka0lxujq0001gsi04r4kcndj" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/celery/" data-id="cka13ery800035ei08ign90bp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -652,7 +847,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/" data-id="cka0lxujv0005gsi04s442o4a" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/" data-id="cka13eryc00085ei073rrfmog" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
@@ -705,7 +900,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" data-id="cka0lxujz000bgsi04myb0d95" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" data-id="cka13eryh000d5ei067qz1gzx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
@@ -750,101 +945,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" data-id="cka0lxujx0009gsi0hkq1hj1y" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" data-id="cka13eryg000b5ei061bsgcqt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Django-中间件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="article-date">
-  <time datetime="2020-05-10T02:56:17.000Z" itemprop="datePublished">2020-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/">Django 中间件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>中间件是一个用来处理Django的请求和响应的框架级别的钩子。它是一个轻量、低级别的插件系统，用于在全局范围内改变Django的输入和输出。每个中间件组件都负责做一些特定的功能。</p>
-<p>但是由于其影响的是全局，所以需要谨慎使用，使用不当会影响性能。</p>
-<p>说的直白一点中间件是帮助我们在视图函数执行之前和执行之后都可以做一些额外的操作，它本质上就是一个自定义类，类中定义了几个方法，Django框架会在请求的特定的时间去执行这些方法。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/" data-id="cka0lxujk0000gsi0bapxhe94" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/10/hello-world/" class="article-date">
-  <time datetime="2020-05-10T02:34:49.724Z" itemprop="datePublished">2020-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/10/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/hello-world/" data-id="cka0lxujt0003gsi0gycshu44" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -870,7 +975,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/peocess/" rel="tag">peocess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/peocess/" rel="tag">peocess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
     </div>
   </div>
 
@@ -880,7 +985,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 20px;">linux</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
+      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 20px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
     </div>
   </div>
 
@@ -902,6 +1007,14 @@
       <ul>
         
           <li>
+            <a href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">mysql 基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/">数据库ACID</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/">linux 如何查看python 调用栈</a>
           </li>
         
@@ -911,14 +1024,6 @@
         
           <li>
             <a href="/blog/2020/05/10/redis/">redis</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/05/10/rabbitmq/">rabbitmq</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/05/10/celery/">celery</a>
           </li>
         
       </ul>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>多线程多进程区别 | Make it different</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是线程线程是操作系统能够进行调度的最小单位,它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。一个线程是一个execution context（执行上下文），即一个cpu执行时所需要的一串指令。  线程工作方式假设你正在读一本书，没有读完，你想休息一下，但是你想在回来时恢复到当时读的具体进度。有一个方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程多进程区别">
+<meta property="og:url" content="https://hackerman-ops.github.io/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="Make it different">
+<meta property="og:description" content="什么是线程线程是操作系统能够进行调度的最小单位,它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。一个线程是一个execution context（执行上下文），即一个cpu执行时所需要的一串指令。  线程工作方式假设你正在读一本书，没有读完，你想休息一下，但是你想在回来时恢复到当时读的具体进度。有一个方">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/1113510/201707/1113510-20170703163116440-978220497.png">
+<meta property="article:published_time" content="2020-05-08T13:22:21.000Z">
+<meta property="article:modified_time" content="2020-05-08T15:31:10.577Z">
+<meta property="article:author" content="wuguobin">
+<meta property="article:tag" content="peocess">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/1113510/201707/1113510-20170703163116440-978220497.png">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Make it different" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Make it different</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">stay hungry, stay foolish</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://hackerman-ops.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-多线程多进程区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2020-05-08T13:22:21.000Z" itemprop="datePublished">2020-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      多线程多进程区别
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><strong>什么是线程</strong><br>线程是操作系统能够进行调度的最小单位,它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。一个线程是一个execution context（执行上下文），即一个cpu执行时所需要的一串指令。</p>
+</li>
+<li><p><strong>线程工作方式</strong><br>假设你正在读一本书，没有读完，你想休息一下，但是你想在回来时恢复到当时读的具体进度。有一个方法就是记下页数、行数与字数这三个数值，这些数值就是execution context。如果你的室友在你休息的时候，使用相同的方法读这本书。你和她只需要这三个数字记下来就可以在交替的时间共同阅读这本书了。</p>
+<p>线程的工作方式与此类似。CPU会给你一个在同一时间能够做多个运算的幻觉，实际上它在每个运算上只花了极少的时间，本质上CPU同一时刻只干了一件事。它能这样做就是因为它有每个运算的execution context。就像你能够和你朋友共享同一本书一样，多任务也能共享同一块CPU。</p>
+</li>
+<li><p><strong>进程</strong><br>一个程序的执行实例就是一个进程。每一个进程提供执行程序所需的所有资源。（进程本质上是资源的集合）</p>
+<p>一个进程有一个虚拟的地址空间、可执行的代码、操作系统的接口、安全的上下文（记录启动该进程的用户和权限等等）、唯一的进程ID、环境变量、优先级类、最小和最大的工作空间（内存空间），还要有至少一个线程。</p>
+<p>每一个进程启动时都会最先产生一个线程，即主线程。然后主线程会再创建其他的子线程。<br>与进程相关的资源包括</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">内存页（同一个进程中的所有线程共享同一个内存空间）</span><br><span class="line">文件描述符(e.g. open sockets)</span><br><span class="line">安全凭证（e.g.启动该进程的用户ID）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>线程和进程的区别</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.同一个进程中的线程共享同一内存空间，但是进程之间是独立的。</span><br><span class="line">2.同一个进程中的所有线程的数据是共享的（进程通讯），进程之间的数据是独立的。</span><br><span class="line">3.对主线程的修改可能会影响其他线程的行为，但是父进程的修改（除了删除以外）不会影响其他子进程。</span><br><span class="line">4.线程是一个上下文的执行指令，而进程则是与运算相关的一簇资源。</span><br><span class="line">5.同一个进程的线程之间可以直接通信，但是进程之间的交流需要借助中间代理来实现。</span><br><span class="line">6.创建新的线程很容易，但是创建新的进程需要对父进程做一次复制。</span><br><span class="line">7.一个线程可以操作同一进程的其他线程，但是进程只能操作其子进程。</span><br><span class="line">8.线程启动速度快，进程启动速度慢（但是两者运行速度没有可比性）。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>多线程</strong></p>
+<p>常用方法</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">start()</td>
+<td align="left">线程准备就绪，等待CPU调度</td>
+</tr>
+<tr>
+<td align="left">setName()</td>
+<td align="left">为线程设置名称</td>
+</tr>
+<tr>
+<td align="left">getName()</td>
+<td align="left">获取线程名称</td>
+</tr>
+<tr>
+<td align="left">setDaemon(True)</td>
+<td align="left">设置为守护线程</td>
+</tr>
+<tr>
+<td align="left">join()</td>
+<td align="left">逐个执行每个线程，执行完毕后继续往下执行</td>
+</tr>
+<tr>
+<td align="left">run()</td>
+<td align="left">线程被cpu调度后自动执行线程对象的run方法，如果想自定义线程类，直接重写run方法就行了</td>
+</tr>
+</tbody></table>
+<p>一般创建方式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def run(n):</span><br><span class="line">    print(&quot;task&quot;, n)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    print(&#39;2s&#39;)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    print(&#39;1s&#39;)</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    print(&#39;0s&#39;)</span><br><span class="line">    time.sleep(1)</span><br><span class="line"></span><br><span class="line">t1 &#x3D; threading.Thread(target&#x3D;run, args&#x3D;(&quot;t1&quot;,))</span><br><span class="line">t2 &#x3D; threading.Thread(target&#x3D;run, args&#x3D;(&quot;t2&quot;,))</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure>
+
+<p>重写run方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MyThread(threading.Thread):</span><br><span class="line">  def __init__(self, n):</span><br><span class="line">        super(MyThread, self).__init__()  # 重构run函数必须要写</span><br><span class="line">      self.n &#x3D; n</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        print(&quot;task&quot;, self.n)</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        print(&#39;2s&#39;)</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        print(&#39;1s&#39;)</span><br><span class="line">        time.sleep(1)</span><br><span class="line">        print(&#39;0s&#39;)</span><br><span class="line">        time.sleep(1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    t1 &#x3D; MyThread(&quot;t1&quot;)</span><br><span class="line">    t2 &#x3D; MyThread(&quot;t2&quot;)</span><br><span class="line"></span><br><span class="line">    t1.start()</span><br><span class="line">    t2.start()</span><br></pre></td></tr></table></figure>
+
+<p>注: <strong>sleep的时候是不会占用cpu的,在sleep的时候操作系统会把线程暂时挂起。</strong></p>
+</li>
+<li><p><strong>GIL</strong></p>
+<p>在非python环境中，单核情况下，同时只能有一个任务执行。多核时可以支持多个线程同时执行。但是在 python中，无论有多少核，同时只能执行一个线程。究其原因，这就是由于GIL的存在导致的。</p>
+<p>GIL的全称是Global Interpreter Lock(全局解释器锁)，来源是python设计之初的考虑，为了数据安全所做的决定。某个线程想要执行，必须先拿到GIL，我们可以把GIL看作是“通行证”，并且在一个python进程中，GIL只有一个。拿不到通行证的线程，就不允许进入CPU执行。GIL只在cpython中才有，因为cpython调用的是c语言的原生线程，所以他不能直接操作cpu，只能利用GIL保证同一时间只能有一个线程拿到数据。而在pypy和jpython中是没有GIL的。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">python在使用多线程的时候，调用的是c语言的原生线程。</span><br><span class="line">1. 拿到公共数据</span><br><span class="line">2. 申请gil</span><br><span class="line">3. python解释器调用os原生线程</span><br><span class="line">4. os操作cpu执行运算</span><br><span class="line">5. 当该线程执行时间到后，无论运算是否已经执行完，gil都被要求释放</span><br><span class="line">6. 进而由其他进程重复上面的过程</span><br><span class="line">7. 等其他进程执行完后，又会切换到之前的线程（从他记录的上下文继续执行）</span><br><span class="line">整个过程是每个线程执行自己的运算，当执行时间到就进行切换（context switch）。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>多线程执行效率</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、CPU密集型代码(各种循环处理、计算等等)，在这种情况下，由于计算工作多，ticks计数很快就会达到阈值，然后触发GIL的释放与再竞争（多个线程来回切换当然是需要消耗资源的），所以python下的多线程对CPU密集型代码并不友好。</span><br><span class="line">2、IO密集型代码(文件处理、网络爬虫等涉及文件读写的操作)，多线程能够有效提升效率(单线程下有IO操作会进行IO等待，造成不必要的时间浪费，而开启多线程能在线程A等待时，自动切换到线程B，可以不浪费CPU的资源，从而能提升程序执行效率)。所以python的多线程对IO密集型代码比较友好。</span><br><span class="line"></span><br><span class="line">python下想要充分利用多核CPU，就用多进程。因为每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，在python中，多进程的执行效率优于多线程(仅仅针对多核CPU而言)。</span><br><span class="line"></span><br><span class="line">1、在python2.x里，GIL的释放逻辑是当前线程遇见IO操作或者ticks计数达到100时进行释放。（ticks可以看作是python自身的一个计数器，专门做用于GIL，每次释放后归零，这个计数可以通过sys.setcheckinterval 来调整）。而每次释放GIL锁，线程进行锁竞争、切换线程，会消耗资源。并且由于GIL锁存在，python里一个进程永远只能同时执行一个线程(拿到GIL的线程才能执行)，这就是为什么在多核CPU上，python的多线程效率并不高。</span><br><span class="line">2、在python3.x中，GIL不使用ticks计数，改为使用计时器（执行时间达到阈值后，当前线程释放GIL），这样对CPU密集型程序更加友好，但依然没有解决GIL导致的同一时间只能执行一个线程的问题，所以效率依然不尽如人意。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>线程锁(互斥锁)</p>
+<p>由于线程之间是进行随机调度，并且每个线程可能只执行n条执行之后，当多个线程同时修改同一条数据时可能会出现脏数据，所以，出现了线程锁，即同一时刻允许一个线程执行操作。线程锁用于锁定资源，你可以定义多个锁, 像下面的代码, 当你需要独占某一资源时，任何一个锁都可以锁这个资源，就好比你用不同的锁都可以把相同的一个门锁住是一个道理。</p>
+<p>由于线程之间是进行随机调度，如果有多个线程同时操作一个对象，如果没有很好地保护该对象，会造成程序结果的不可预期，我们也称此为“线程不安全”。</p>
+</li>
+</ul>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a><strong>引用</strong></h4><p><a href="https://www.cnblogs.com/whatisfantasy/p/6440585.html" target="_blank" rel="noopener">https://www.cnblogs.com/whatisfantasy/p/6440585.html</a></p>
+<p><a href="https://www.zhihu.com/question/23030421" target="_blank" rel="noopener">https://www.zhihu.com/question/23030421</a></p>
+<p><a href="https://blog.csdn.net/j2IaYU7Y/article/details/80147766" target="_blank" rel="noopener">https://blog.csdn.net/j2IaYU7Y/article/details/80147766</a></p>
+<h3 id="说说装饰器"><a href="#说说装饰器" class="headerlink" title="说说装饰器"></a>说说装饰器</h3><ul>
+<li><p>装饰器本质上是一个 Python 函数或类，</p>
+</li>
+<li><p>它可以让其他函数或类在不需要做任何代码修改的前提下增加额外功能，</p>
+</li>
+<li><p>装饰器的返回值也是一个函数/类对象。</p>
+</li>
+<li><p>它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景，装饰器是解决这类问题的绝佳设计。</p>
+</li>
+<li><p>有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码到装饰器中并继续重用。概括的讲，装饰器的作用就是为已经存在的对象添加额外的功能</p>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4></li>
+</ul>
+<p>在一些语言中，在函数中可以（嵌套）定义另一个函数时，如果内部的函数引用了外部的函数的变量，则可能产生闭包。闭包可以用来在一个函数与一组“私有”变量之间创建关联关系。在给定函数被多次调用的过程中，这些私有变量能够保持其持久性。</p>
+<p>用比较容易懂的人话说，就是当某个<strong>函数</strong>被当成对象返回时，<strong>夹带了外部变量</strong>，就形成了一个闭包。看例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def make_printer(msg):</span><br><span class="line">    def printer():</span><br><span class="line">        print msg  # 夹带私货（外部变量）</span><br><span class="line">    return printer  # 返回的是函数，带私货的函数</span><br><span class="line"></span><br><span class="line">printer &#x3D; make_printer(&#39;Foo!&#39;)</span><br><span class="line">printer()</span><br></pre></td></tr></table></figure>
+
+<h4 id="简单装饰器"><a href="#简单装饰器" class="headerlink" title="简单装饰器"></a>简单装饰器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def use_logging(func):</span><br><span class="line"></span><br><span class="line">    def wrapper():</span><br><span class="line">        logging.warn(&quot;%s is running&quot; % func.__name__)</span><br><span class="line">        return func()   # 把 foo 当做参数传递进来时，执行func()就相当于执行foo()</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">def foo():</span><br><span class="line">    print(&#39;i am foo&#39;)</span><br><span class="line"></span><br><span class="line">foo &#x3D; use_logging(foo)  # 因为装饰器 use_logging(foo) 返回的时函数对象 wrapper，这条语句相当于  foo &#x3D; wrapper</span><br><span class="line">foo()                   # 执行foo()就相当于执行 wrapper()</span><br></pre></td></tr></table></figure>
+
+<h4 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def wrapper():</span><br><span class="line">        logging.warn(&quot;%s is running&quot; % func.__name__)</span><br><span class="line">        return func()</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@use_logging</span><br><span class="line">def foo():</span><br><span class="line">    print(&quot;i am foo&quot;)</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
+
+<h4 id="带参数装饰器"><a href="#带参数装饰器" class="headerlink" title="带参数装饰器"></a>带参数装饰器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def logging(level):</span><br><span class="line">    def wrapper(func):</span><br><span class="line">        def inner_wrapper(*args, **kwargs):</span><br><span class="line">            print &quot;[&#123;level&#125;]: enter function &#123;func&#125;()&quot;.format(</span><br><span class="line">                level&#x3D;level,</span><br><span class="line">                func&#x3D;func.__name__)</span><br><span class="line">            return func(*args, **kwargs)</span><br><span class="line">        return inner_wrapper</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">@logging(level&#x3D;&#39;INFO&#39;)</span><br><span class="line">def say(something):</span><br><span class="line">    print &quot;say &#123;&#125;!&quot;.format(something)</span><br><span class="line"></span><br><span class="line"># 如果没有使用@语法，等同于</span><br><span class="line"># say &#x3D; logging(level&#x3D;&#39;INFO&#39;)(say)</span><br><span class="line"></span><br><span class="line">@logging(level&#x3D;&#39;DEBUG&#39;)</span><br><span class="line">def do(something):</span><br><span class="line">    print &quot;do &#123;&#125;...&quot;.format(something)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    say(&#39;hello&#39;)</span><br><span class="line">    do(&quot;my work&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h4><p>装饰器函数其实是这样一个接口约束，它必须接受一个callable对象作为参数，然后返回一个callable对象。在Python中一般callable对象都是函数，但也有例外。只要某个对象重载了<code>__call__()</code>方法，那么这个对象就是callable的。像<code>__call__</code>这样前后都带下划线的方法在Python中被称为内置方法，有时候也被称为魔法方法。重载这些魔法方法一般会改变对象的内部行为。上面这个例子就让一个类对象拥有了被调用的行为。</p>
+<p>回到装饰器上的概念上来，装饰器要求接受一个callable对象，并返回一个callable对象（不太严谨，详见后文）。那么用类来实现也是也可以的。我们可以让类的构造函数<code>__init__()</code>接受一个函数，然后重载<code>__call__()</code>并返回一个函数，也可以达到装饰器函数的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class logging(object):</span><br><span class="line">    def __init__(self, func):</span><br><span class="line">        self.func &#x3D; func</span><br><span class="line"></span><br><span class="line">    def __call__(self, *args, **kwargs):</span><br><span class="line">        print &quot;[DEBUG]: enter function &#123;func&#125;()&quot;.format(</span><br><span class="line">            func&#x3D;self.func.__name__)</span><br><span class="line">        return self.func(*args, **kwargs)</span><br><span class="line">@logging</span><br><span class="line">def say(something):</span><br><span class="line">    print &quot;say &#123;&#125;!&quot;.format(something)</span><br></pre></td></tr></table></figure>
+
+<p><strong>引用</strong></p>
+<p><a href="https://www.cnblogs.com/cicaday/p/python-decorator.html" target="_blank" rel="noopener">https://www.cnblogs.com/cicaday/p/python-decorator.html</a></p>
+<h3 id="数据库ACID"><a href="#数据库ACID" class="headerlink" title="数据库ACID"></a>数据库ACID</h3><p>ACID，是指在可靠数据库管理系统（DBMS）中，事务(transaction)所应该具有的四个特性：</p>
+<ul>
+<li>原子性（Atomicity）事务是一个不可再分割的工作单位，事务中的操作要么都发生，要么都不发生。</li>
+<li>一致性（Consistency）事务开始之前和事务结束以后，数据库的完整性约束没有被破坏。这是说数据库事务不能破坏关系数据的完整性以及业务逻辑上的一致性。</li>
+<li>隔离性（Isolation） 多个事务并发访问时，事务之间是隔离的，一个事务不应该影响其它事务运行效果。</li>
+<li>持久性（Durability） 持久性，意味着在事务完成以后，该事务所对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。</li>
+</ul>
+<h3 id="文件夹遍历"><a href="#文件夹遍历" class="headerlink" title="文件夹遍历"></a>文件夹遍历</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import shutil</span><br><span class="line"></span><br><span class="line">def walk_test():</span><br><span class="line">    filedir &#x3D; &quot;&#x2F;home&#x2F;dsh&#x2F;wall_test&#x2F;&quot;</span><br><span class="line">    for root,dirs,files in os.walk(filedir):</span><br><span class="line">        for dir_list in dirs:</span><br><span class="line">            print(os.path.join(root,dir_list))</span><br><span class="line">        for files_list in files:</span><br><span class="line">            print(os.path.join(root,files_list))</span><br><span class="line">        print(&quot;##########&quot;)</span><br><span class="line"></span><br><span class="line">walk_test()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python-内存管理机制"><a href="#python-内存管理机制" class="headerlink" title="python 内存管理机制"></a>python 内存管理机制</h3><h4 id="变量与对象"><a href="#变量与对象" class="headerlink" title="变量与对象"></a><strong>变量与对象</strong></h4><p>1、变量，通过变量指针引用对象</p>
+<p>　　变量指针指向具体对象的内存空间，取对象的值。</p>
+<p>2、对象，类型已知，每个对象都包含一个头部信息（头部信息：类型标识符和引用计数器）</p>
+<p>变量名没有类型，类型属于对象（因为变量引用对象，所以类型随对象），变量引用什么类型的对象，变量就是什么类型的。</p>
+<p><strong>重点</strong></p>
+<p>1、Python缓存了整数和短字符串，因此每个对象在内存中只存有一份，引用所指对象就是相同的，即使使用赋值语句，也只是创造新的引用，而不是对象本身；</p>
+<p>2、Python没有缓存长字符串、列表及其他对象，可以由多个相同的对象，可以使用赋值语句创建出新的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">In [32]: var1&#x3D;object</span><br><span class="line">In [33]: var2&#x3D;var1</span><br><span class="line"></span><br><span class="line">In [34]: id(var1)</span><br><span class="line">Out[34]: 139697863383968</span><br><span class="line"></span><br><span class="line">In [35]: id(var2)</span><br><span class="line">Out[35]: 139697863383968</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://images2015.cnblogs.com/blog/1113510/201707/1113510-20170703163116440-978220497.png" alt="img"></p>
+<h4 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h4><p>PyObject是每个对象必有的内容，其中ob_refcnt就是做为引用计数。当一个对象有新的引用时，它的ob_refcnt就会增加，当引用它的对象被删除，它的ob_refcnt就会减少。 一旦对象的引用计数为0，该对象立即被回收，对象占用的内存空间将被释放。</p>
+<p>此算法的优点和缺点都是非常明显的：</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>简单</li>
+<li>实时性：一旦没有引用，内存就直接释放了。不用像其他机制等到特定时机。</li>
+</ul>
+<p><strong>缺点:</strong></p>
+<ul>
+<li>需要额外的空间维护引用计数。</li>
+<li>不能解决对象的<strong>循环引用</strong>。(主要缺点)</li>
+</ul>
+<h4 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><p>垃圾回收机制，Python 采用 GC 作为自动内存管理机制，GC要做的有2件事，一是找到内存中无用的垃圾对象资源，二是清除找到的这些垃圾对象，释放内存给其他对象使用。</p>
+<p>如何实现上述2点了，Python 采用了 引用计数 为主， 标志清除和分代回收 为辅助策略。</p>
+<p><strong>标记清除</strong></p>
+<p>主要是解决循环引用问题。</p>
+<p>标记清除算法是一种基于追踪回收（tracing GC）技术实现的垃圾回收算法。 它分为两个阶段：第一阶段是标记阶段，GC会把所有的 活动对象 打上标记，第二阶段是把那些没有标记的对象 非活动对象 进行回收。那么GC又是如何判断哪些是活动对象哪些是非活动对象的呢？</p>
+<p>对象之间通过引用（指针）连在一起，构成一个有向图，对象构成这个有向图的节点，而引用关系构成这个有向图的边。从根对象（root object）出发，沿着有向边遍历对象，可达的（reachable）对象标记为活动对象，不可达的对象就是要被清除的非活动对象。根对象就是全局变量、调用栈、寄存器。</p>
+<p><strong>分代回收</strong></p>
+<p>分代回收是一种以空间换时间的操作方式。</p>
+<p>Python将内存根据对象的存活时间划分为不同的集合，每个集合称为一个代，Python将内存分为了3“代”，分别为年轻代（第0代）、中年代（第1代）、老年代（第2代），他们对应的是3个链表，它们的垃圾收集频率与对象的存活时间的增大而减小。新创建的对象都会分配在年轻代，年轻代链表的总数达到上限时，Python垃圾收集机制就会被触发，把那些可以被回收的对象回收掉，而那些不会回收的对象就会被移到中年代去，依此类推，老年代中的对象是存活时间最久的对象，甚至是存活于整个系统的生命周期内。同时，分代回收是建立在标记清除技术基础之上。</p>
+<p>分代回收同样作为Python的辅助垃圾收集技术处理容器对象。</p>
+<h4 id="内存池机制"><a href="#内存池机制" class="headerlink" title="内存池机制"></a>内存池机制</h4><p>Python中有分为大内存和小内存：（256K为界限分大小内存）</p>
+<p>1、大内存使用malloc进行分配</p>
+<p>2、小内存使用内存池进行分配</p>
+<p>第3层：最上层，用户对Python对象的直接操作</p>
+<p>第1层和第2层：内存池，有Python的接口函数PyMem_Malloc实现—–若请求分配的内存在1~256字节之间就使用内存池管理系统进行分配，调用malloc函数分配内存，但是每次只会分配一块大小为256K的大块内存，不会调用free函数释放内存，将该内存块留在内存池中以便下次使用。</p>
+<p>第0层：大内存—–若请求分配的内存大于256K，malloc函数分配内存，free函数释放内存。</p>
+<p>第-1，-2层：操作系统进行操作</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/" data-id="cka0lxuks000ngsi09hibd80y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/peocess/" rel="tag">peocess</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2020/05/10/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/peocess/" rel="tag">peocess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 20px;">linux</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/">linux 如何查看python 调用栈</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/">进程假死现象</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/rabbitmq/">rabbitmq</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/celery/">celery</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wuguobin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -68,6 +68,111 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-monkey-patch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/monkey-patch/" class="article-date">
+  <time datetime="2020-05-10T13:36:30.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/monkey-patch/">monkey patch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-gevent-模块简介"><a href="#1-gevent-模块简介" class="headerlink" title="1.gevent 模块简介"></a>1.gevent 模块简介</h3><p>​    gevent<strong>是一个基于</strong>libev<strong>的并发库。它为各种并发和网络相关的任务提供了整洁的</strong>API<em>*。</em></p>
+<p>​    gevent<strong>中用到的主要模式是</strong>greenlet<strong>，</strong>它是以<strong>C</strong>扩展模块形式接入<strong>Python</strong>的轻量级协程。greenlet全部运行在主程序操作系统进程的内部，但它们被协作式地调度</p>
+<h3 id="2-gevent-程序举例"><a href="#2-gevent-程序举例" class="headerlink" title="2.gevent 程序举例"></a>2.gevent 程序举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import gevent</span><br><span class="line"> </span><br><span class="line">def foo():</span><br><span class="line">    print(&#39;Running in foo&#39;)</span><br><span class="line">    gevent.sleep(0)</span><br><span class="line">    print(&#39;Explicit context switch to fooagain&#39;)</span><br><span class="line"> </span><br><span class="line">def bar():</span><br><span class="line">    print(&#39;Explicit context to bar&#39;)</span><br><span class="line">    gevent.sleep(0)</span><br><span class="line">    print(&#39;Implicit context switch back tobar&#39;)</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(foo),</span><br><span class="line">    gevent.spawn(bar),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import gevent</span><br><span class="line">import random</span><br><span class="line"> </span><br><span class="line">def task(pid):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Some non-deterministic task</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    gevent.sleep(random.randint(0,2)*0.001)</span><br><span class="line">    print(&#39;Task %s done&#39; % pid)</span><br><span class="line"> </span><br><span class="line">def synchronous():</span><br><span class="line">    for i in range(1,10):</span><br><span class="line">        task(i)</span><br><span class="line"> </span><br><span class="line">def asynchronous():</span><br><span class="line">    threads &#x3D; [gevent.spawn(task, i) for i inxrange(10)]</span><br><span class="line">    gevent.joinall(threads)</span><br><span class="line"> </span><br><span class="line">print(&#39;Synchronous:&#39;)</span><br><span class="line">synchronous()</span><br><span class="line"> </span><br><span class="line">print(&#39;Asynchronous:&#39;)</span><br><span class="line">asynchronous()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import gevent</span><br><span class="line">from gevent importselect</span><br><span class="line"> </span><br><span class="line">start &#x3D; time.time()</span><br><span class="line">tic &#x3D; lambda: &#39;at%1.1f seconds&#39; % (time.time() - start)</span><br><span class="line"> </span><br><span class="line">def gr1():</span><br><span class="line">    # Busy waits for a second, but we don&#39;twant to stick around...</span><br><span class="line">    print(&#39;Started Polling: %s&#39; % tic())</span><br><span class="line">    select.select([], [], [], 2)</span><br><span class="line">    print(&#39;Ended Polling: %s&#39; % tic())</span><br><span class="line"> </span><br><span class="line">def gr2():</span><br><span class="line">    # Busy waits for a second, but we don&#39;twant to stick around...</span><br><span class="line">    print(&#39;Started Polling: %s&#39; % tic())</span><br><span class="line">    select.select([], [], [], 2)</span><br><span class="line">    print(&#39;Ended Polling: %s&#39; % tic())</span><br><span class="line"> </span><br><span class="line">def gr3():</span><br><span class="line">    print(&quot;Hey lets do some stuff whilethe greenlets poll, %s&quot; % tic())</span><br><span class="line">    gevent.sleep(1)</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(gr1),</span><br><span class="line">    gevent.spawn(gr2),</span><br><span class="line">    gevent.spawn(gr3),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p>备注：</p>
+<p><em>（<strong>1</strong>）程序的重要部分是将任务<strong>函数封装到gevent.spawn。初始化的greenlet列表存放在数组threads中，此数组被传给gevent.joinall 函数，gevent.joinall</strong>会<strong>阻塞当前流程，并执行所有给定的greenlet</strong>，**执行流程只会在所有greenlet执行完后才会继续向下走。</em></p>
+<p><em>（<strong>2</strong>）<strong>gevent实现了python标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和select等模块，而将这些阻塞式调用变为协作式运行</strong>（参见猴子补丁部分）。</em></p>
+<h3 id="3-猴子补丁Monkey-Patch"><a href="#3-猴子补丁Monkey-Patch" class="headerlink" title="3 猴子补丁Monkey Patch"></a>3 猴子补丁Monkey Patch</h3><p><em>（1）猴子补丁的由来</em></p>
+<p>​     <em>猴子补丁的这个叫法起源于**Zope框架，大家在修正Zope的Bug的时候经常在程序后面追加更新部分，这些被称作是“杂牌军补丁(guerillapatch)”，后来guerilla就渐渐的写成了gorllia(猩猩)，再后来就写了monkey(猴子)，所以猴子补丁的叫法是这么莫名其妙的得来的。</em></p>
+<p>​     <em>后来在动态语言中，不改变源代码而对功能进行追加和变更，统称为“猴子补丁”。所以猴子补丁并不是Python中专有的。猴子补丁这种东西充分利用了动态语言的灵活性，可以对现有的语言**Api进行追加，替换，修改Bug，甚至性能优化等等。</em></p>
+<p>  使用猴子补丁的方式，gevent能够修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。也就是通过猴子补丁的<em>monkey.patch_xxx()<strong>来将</strong>python<strong>标准库中模块或函数改成</strong>gevent**中的响应的具有协程的协作式对象。这样在不改变原有代码的情况下，将应用的阻塞式方法，变成协程式的。</em></p>
+<p><em>（2）猴子补丁使用时的注意事项</em></p>
+<p>  <strong>猴子补丁的功能很强大，但是也带来了很多的风险，尤其是像</strong>gevent这种直接进行API替换的补丁，整个Python进程所使用的模块都会被替换，可能自己的代码能hold住，但是其它第三方库，有时候问题并不好排查，即使排查出来也是很棘手，所以，就像松本建议的那样，如果要使用猴子补丁，那么只是做功能追加，尽量避免大规模的API覆盖</p>
+<p> <em>虽然猴子补丁仍然是邪恶的(evil)，但在这种情况下它是“有用的邪恶(useful evil)”。</em></p>
+<p><em>（3）python中使用gevent的猴子补丁的举例</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import socket</span><br><span class="line">print(socket.socket)</span><br><span class="line"> </span><br><span class="line">print(&quot;Aftermonkey patch&quot;)</span><br><span class="line">from gevent importmonkey</span><br><span class="line">monkey.patch_socket()</span><br><span class="line">print(socket.socket)</span><br><span class="line"> </span><br><span class="line">import select</span><br><span class="line">print(select.select)</span><br><span class="line">monkey.patch_select()</span><br><span class="line">print(&quot;Aftermonkey patch&quot;)</span><br><span class="line">print(select.select)</span><br></pre></td></tr></table></figure>
+
+<p>python中使用补丁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Example():</span><br><span class="line">    def func1(self):</span><br><span class="line">        print(&#39;我才是原装&#39;)</span><br><span class="line"></span><br><span class="line">def func2(*args):</span><br><span class="line">    print(&#39;我要取代你&#39;)</span><br><span class="line"></span><br><span class="line">def func3(*args):</span><br><span class="line">    print(&#39;都给我一边去&#39;)</span><br><span class="line"></span><br><span class="line">instance &#x3D; Example()</span><br><span class="line">Example.func1 &#x3D; func2</span><br><span class="line">instance.func1() # 我要取代你</span><br><span class="line">instance.func1 &#x3D; func3</span><br><span class="line">instance.func1() # 都给我一边去</span><br><span class="line">instance2 &#x3D; Example()</span><br><span class="line">instance2.func1() # 我要取代你</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/monkey-patch/" data-id="cka15giq000040ni05pkb3cmd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-uwsgi-wsgi-WSGI-区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2020-05-10T13:32:12.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/">uwsgi wsgi WSGI 区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="WSGI"><a href="#WSGI" class="headerlink" title="WSGI"></a>WSGI</h2><p>英文全称：Web Server Gateway Interface，Web服务网管接口，简单来说它是一种Web服务器和应用程序间的通信规范。</p>
+<h2 id="uwsgi"><a href="#uwsgi" class="headerlink" title="uwsgi"></a>uwsgi</h2><p>uwsgi是一种通信协议，不过跟WSGI分属两种东西，该协议下速度比较快。</p>
+<h2 id="uWSGI"><a href="#uWSGI" class="headerlink" title="uWSGI"></a>uWSGI</h2><p>uWSGI是一个Web Server，并且独占uwsgi协议，但是同时支持WSGI协议、HTTP协议等，它的功能是把HTTP协议转化成语言支持的网络协议供python使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/" data-id="cka15giq6000f0ni08ztg7k9u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mysql-基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-date">
@@ -128,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" data-id="cka13eryb00055ei04sas3xyj" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" data-id="cka15giq300080ni0h4vihbqa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li></ul>
@@ -251,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/" data-id="cka13eryj000f5ei08i3kd21l" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/" data-id="cka15giq9000l0ni07nseb0mp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
@@ -366,7 +471,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/" data-id="cka13ery900045ei07cx1fhaj" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/" data-id="cka15giq100050ni04tmw280p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -428,7 +533,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/" data-id="cka13erym000h5ei03lujcxvb" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/" data-id="cka15giqa000o0ni007m73pmn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
@@ -659,7 +764,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/redis/" data-id="cka13erz4000w5ei0a1sx18zw" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/redis/" data-id="cka15gir4000x0ni0gk109bmo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li></ul>
@@ -729,7 +834,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/rabbitmq/" data-id="cka13erye00095ei03km40ank" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/rabbitmq/" data-id="cka15giq5000d0ni0grnm6pws" class="article-share-link">Share</a>
       
       
     </footer>
@@ -766,7 +871,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/celery/" data-id="cka13ery800035ei08ign90bp" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/celery/" data-id="cka15gipq00000ni0hhxc8ca1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -847,108 +952,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/" data-id="cka13eryc00085ei073rrfmog" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/python-dict-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0/" data-id="cka15giq4000a0ni084sd0f4h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-散列表冲突" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" class="article-date">
-  <time datetime="2020-05-10T04:24:03.000Z" itemprop="datePublished">2020-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/">散列表冲突</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>散列冲突的解决办法，开放寻址法和链表法。</strong></p>
-<p><strong>开放寻址法</strong></p>
-<p>我们先来看看，开放寻址法的优点有哪些。</p>
-<p>开放寻址法不像链表法，需要拉很多链表。散列表中的数据都存储在数组中，可以有效地利用 CPU 缓存加快查询速度。而且，这种方法实现的散列表，序列化起来比较简单。链表法包含指针，序列化起来就没那么容易。你可不要小看序列化，很多场合都会用到的。我们后面就有一节会讲什么是数据结构序列化、如何序列化，以及为什么要序列化。</p>
-<p>我们再来看下，开放寻址法有哪些缺点。上一节我们讲到，用开放寻址法解决冲突的散列表，删除数据的时候比较麻烦，需要特殊标记已经删除掉的数据。而且，在开放寻址法中，所有的数据都存储在一个数组中，比起链表法来说，冲突的代价更高。</p>
-<p>所以，使用开放寻址法解决冲突的散列表，装载因子的上限不能太大。这也导致这种方法比链表法更浪费内存空间。</p>
-<p>当数据量比较小、装载因子小的时候，适合采用开放寻址法。这也是 Java 中的ThreadLocalMap使用开放寻址法解决散列冲突的原因。</p>
-<p><strong>链表法</strong></p>
-<p>链表法对内存的利用率比开放寻址法要高。因为链表结点可以在需要的时候再创建，并不需要像开放寻址法那样事先申请好。实际上，这一点也是我们前面讲过的链表优于数组的地方。</p>
-<p>链表法比起开放寻址法，对大装载因子的容忍度更高。开放寻址法只能适用装载因子小于 1 的情况。接近 1 时，就可能会有大量的散列冲突，导致大量的探测、再散列等，性能会下降很多。但是对于链表法来说，只要散列函数的值随机均匀，即便装载因子变成 10，也就是链表的长度变长了而已，虽然查找效率有所下降，但是比起顺序查找还是快很多。</p>
-<p>链表因为要存储指针，所以对于比较小的对象的存储，是比较消耗内存的，还有可能会让内存的消耗翻倍。而且，因为链表中的结点是零散分布在内存中的，不是连续的，所以对 CPU 缓存是不友好的，这方面对于执行效率也有一定的影响。</p>
-<p>当然，如果我们存储的是大对象，也就是说要存储的对象的大小远远大于一个指针的大小（4 个字节或者 8 个字节），那链表中指针的内存消耗在大对象面前就可以忽略了。</p>
-<p>我们对链表法稍加改造，可以实现一个更加高效的散列表。那就是，我们将链表法中的链表改造为其他高效的动态数据结构，比如跳表、红黑树。这样，即便出现散列冲突，极端情况下，所有的数据都散列到同一个桶内，那最终退化成的散列表的查找时间也只不过是 O(logn)。这样也就有效避免了前面讲到的散列碰撞攻击。</p>
-<p><img src="https://static001.geekbang.org/resource/image/10/29/103b84d7173277c5565607b413c40129.jpg" alt="img"></p>
-<p>基于链表的散列冲突处理方法比较适合存储大对象、大数据量的散列表，而且，比起开放寻址法，它更加灵活，支持更多的优化策略，比如用红黑树代替链表。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" data-id="cka13eryh000d5ei067qz1gzx" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-惊群效应" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" class="article-date">
-  <time datetime="2020-05-10T04:22:59.000Z" itemprop="datePublished">2020-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/">惊群效应</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="惊群效应是什么"><a href="#惊群效应是什么" class="headerlink" title="惊群效应是什么"></a><strong>惊群效应是什么</strong></h2><p>惊群效应（thundering herd）是指多进程（多线程）在同时阻塞等待同一个事件的时候（休眠状态），如果等待的这个事件发生，那么他就会唤醒等待的所有进程（或者线程），但是最终却只能有一个进程（线程）获得这个时间的“控制权”，对该事件进行处理，而其他进程（线程）获取“控制权”失败，只能重新进入休眠状态，这种现象和性能浪费就叫做惊群效应。</p>
-<h2 id="惊群效应消耗了什么"><a href="#惊群效应消耗了什么" class="headerlink" title="惊群效应消耗了什么"></a><strong>惊群效应消耗了什么</strong></h2><ul>
-<li>Linux 内核对用户进程（线程）频繁地做无效的调度、上下文切换等使系统性能大打折扣。上下文切换（context switch）过高会导致 CPU 像个搬运工，频繁地在寄存器和运行队列之间奔波，更多的时间花在了进程（线程）切换，而不是在真正工作的进程（线程）上面。直接的消耗包括 CPU 寄存器要保存和加载（例如程序计数器）、系统调度器的代码需要执行。间接的消耗在于多核 cache 之间的共享数据。</li>
-<li>为了确保只有一个进程（线程）得到资源，需要对资源操作进行加锁保护，加大了系统的开销。目前一些常见的服务器软件有的是通过锁机制解决的，比如 Nginx（它的锁机制是默认开启的，可以关闭）；还有些认为惊群对系统性能影响不大，没有去处理，比如 Lighttpd。</li>
-</ul>
-<h3 id="accept（）惊群："><a href="#accept（）惊群：" class="headerlink" title="accept（）惊群："></a>accept（）惊群：</h3><p> 首先让我们先来考虑一个场景：<br>​ 主进程创建了socket、bind、listen之后，fork()出来多个进程，每个子进程都开始循环处理（accept）这个listen_fd。每个进程都阻塞在accept上，当一个新的连接到来时候，所有的进程都会被唤醒，但是其中只有一个进程会接受成功，其余皆失败，重新休眠。<br>​ 那么这个问题真的存在吗？<br>​ 历史上，Linux的accpet确实存在惊群问题，但现在的内核都解决该问题了。即，当多个进程/线程都阻塞在对同一个socket的接受调用上时，当有一个新的连接到来，内核只会唤醒一个进程，其他进程保持休眠，压根就不会被唤醒。</p>
-<p>原文链接：<a href="https://blog.csdn.net/lyztyycode/java/article/details/78648798" target="_blank" rel="noopener">https://blog.csdn.net/lyztyycode/java/article/details/78648798</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" data-id="cka13eryg000b5ei061bsgcqt" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
 
     </footer>
   </div>
@@ -985,7 +992,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 20px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 20px;">数据结构</a>
+      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15px;">数据结构</a>
     </div>
   </div>
 
@@ -1007,6 +1014,14 @@
       <ul>
         
           <li>
+            <a href="/blog/2020/05/10/monkey-patch/">monkey patch</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/">uwsgi wsgi WSGI 区别</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">mysql 基本操作</a>
           </li>
         
@@ -1016,14 +1031,6 @@
         
           <li>
             <a href="/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/">linux 如何查看python 调用栈</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/">进程假死现象</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/05/10/redis/">redis</a>
           </li>
         
       </ul>

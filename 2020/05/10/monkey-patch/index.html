@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>monkey patch | Make it different</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.gevent 模块简介​    gevent是一个基于libev的并发库。它为各种并发和网络相关的任务提供了整洁的API*。 ​    gevent中用到的主要模式是greenlet，它是以C扩展模块形式接入Python的轻量级协程。greenlet全部运行在主程序操作系统进程的内部，但它们被协作式地调度 2.gevent 程序举例1234567891011121314151617import">
+<meta property="og:type" content="article">
+<meta property="og:title" content="monkey patch">
+<meta property="og:url" content="https://hackerman-ops.github.io/blog/2020/05/10/monkey-patch/index.html">
+<meta property="og:site_name" content="Make it different">
+<meta property="og:description" content="1.gevent 模块简介​    gevent是一个基于libev的并发库。它为各种并发和网络相关的任务提供了整洁的API*。 ​    gevent中用到的主要模式是greenlet，它是以C扩展模块形式接入Python的轻量级协程。greenlet全部运行在主程序操作系统进程的内部，但它们被协作式地调度 2.gevent 程序举例1234567891011121314151617import">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-10T13:36:30.000Z">
+<meta property="article:modified_time" content="2020-05-10T14:25:27.012Z">
+<meta property="article:author" content="wuguobin">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Make it different" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Make it different</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/blog/" id="subtitle">stay hungry, stay foolish</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://hackerman-ops.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-monkey-patch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/monkey-patch/" class="article-date">
+  <time datetime="2020-05-10T13:36:30.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      monkey patch
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-gevent-模块简介"><a href="#1-gevent-模块简介" class="headerlink" title="1.gevent 模块简介"></a>1.gevent 模块简介</h3><p>​    gevent<strong>是一个基于</strong>libev<strong>的并发库。它为各种并发和网络相关的任务提供了整洁的</strong>API<em>*。</em></p>
+<p>​    gevent<strong>中用到的主要模式是</strong>greenlet<strong>，</strong>它是以<strong>C</strong>扩展模块形式接入<strong>Python</strong>的轻量级协程。greenlet全部运行在主程序操作系统进程的内部，但它们被协作式地调度</p>
+<h3 id="2-gevent-程序举例"><a href="#2-gevent-程序举例" class="headerlink" title="2.gevent 程序举例"></a>2.gevent 程序举例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import gevent</span><br><span class="line"> </span><br><span class="line">def foo():</span><br><span class="line">    print(&#39;Running in foo&#39;)</span><br><span class="line">    gevent.sleep(0)</span><br><span class="line">    print(&#39;Explicit context switch to fooagain&#39;)</span><br><span class="line"> </span><br><span class="line">def bar():</span><br><span class="line">    print(&#39;Explicit context to bar&#39;)</span><br><span class="line">    gevent.sleep(0)</span><br><span class="line">    print(&#39;Implicit context switch back tobar&#39;)</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(foo),</span><br><span class="line">    gevent.spawn(bar),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import gevent</span><br><span class="line">import random</span><br><span class="line"> </span><br><span class="line">def task(pid):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Some non-deterministic task</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    gevent.sleep(random.randint(0,2)*0.001)</span><br><span class="line">    print(&#39;Task %s done&#39; % pid)</span><br><span class="line"> </span><br><span class="line">def synchronous():</span><br><span class="line">    for i in range(1,10):</span><br><span class="line">        task(i)</span><br><span class="line"> </span><br><span class="line">def asynchronous():</span><br><span class="line">    threads &#x3D; [gevent.spawn(task, i) for i inxrange(10)]</span><br><span class="line">    gevent.joinall(threads)</span><br><span class="line"> </span><br><span class="line">print(&#39;Synchronous:&#39;)</span><br><span class="line">synchronous()</span><br><span class="line"> </span><br><span class="line">print(&#39;Asynchronous:&#39;)</span><br><span class="line">asynchronous()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import gevent</span><br><span class="line">from gevent importselect</span><br><span class="line"> </span><br><span class="line">start &#x3D; time.time()</span><br><span class="line">tic &#x3D; lambda: &#39;at%1.1f seconds&#39; % (time.time() - start)</span><br><span class="line"> </span><br><span class="line">def gr1():</span><br><span class="line">    # Busy waits for a second, but we don&#39;twant to stick around...</span><br><span class="line">    print(&#39;Started Polling: %s&#39; % tic())</span><br><span class="line">    select.select([], [], [], 2)</span><br><span class="line">    print(&#39;Ended Polling: %s&#39; % tic())</span><br><span class="line"> </span><br><span class="line">def gr2():</span><br><span class="line">    # Busy waits for a second, but we don&#39;twant to stick around...</span><br><span class="line">    print(&#39;Started Polling: %s&#39; % tic())</span><br><span class="line">    select.select([], [], [], 2)</span><br><span class="line">    print(&#39;Ended Polling: %s&#39; % tic())</span><br><span class="line"> </span><br><span class="line">def gr3():</span><br><span class="line">    print(&quot;Hey lets do some stuff whilethe greenlets poll, %s&quot; % tic())</span><br><span class="line">    gevent.sleep(1)</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">    gevent.spawn(gr1),</span><br><span class="line">    gevent.spawn(gr2),</span><br><span class="line">    gevent.spawn(gr3),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p>备注：</p>
+<p><em>（<strong>1</strong>）程序的重要部分是将任务<strong>函数封装到gevent.spawn。初始化的greenlet列表存放在数组threads中，此数组被传给gevent.joinall 函数，gevent.joinall</strong>会<strong>阻塞当前流程，并执行所有给定的greenlet</strong>，**执行流程只会在所有greenlet执行完后才会继续向下走。</em></p>
+<p><em>（<strong>2</strong>）<strong>gevent实现了python标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和select等模块，而将这些阻塞式调用变为协作式运行</strong>（参见猴子补丁部分）。</em></p>
+<h3 id="3-猴子补丁Monkey-Patch"><a href="#3-猴子补丁Monkey-Patch" class="headerlink" title="3 猴子补丁Monkey Patch"></a>3 猴子补丁Monkey Patch</h3><p><em>（1）猴子补丁的由来</em></p>
+<p>​     <em>猴子补丁的这个叫法起源于**Zope框架，大家在修正Zope的Bug的时候经常在程序后面追加更新部分，这些被称作是“杂牌军补丁(guerillapatch)”，后来guerilla就渐渐的写成了gorllia(猩猩)，再后来就写了monkey(猴子)，所以猴子补丁的叫法是这么莫名其妙的得来的。</em></p>
+<p>​     <em>后来在动态语言中，不改变源代码而对功能进行追加和变更，统称为“猴子补丁”。所以猴子补丁并不是Python中专有的。猴子补丁这种东西充分利用了动态语言的灵活性，可以对现有的语言**Api进行追加，替换，修改Bug，甚至性能优化等等。</em></p>
+<p>  使用猴子补丁的方式，gevent能够修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。也就是通过猴子补丁的<em>monkey.patch_xxx()<strong>来将</strong>python<strong>标准库中模块或函数改成</strong>gevent**中的响应的具有协程的协作式对象。这样在不改变原有代码的情况下，将应用的阻塞式方法，变成协程式的。</em></p>
+<p><em>（2）猴子补丁使用时的注意事项</em></p>
+<p>  <strong>猴子补丁的功能很强大，但是也带来了很多的风险，尤其是像</strong>gevent这种直接进行API替换的补丁，整个Python进程所使用的模块都会被替换，可能自己的代码能hold住，但是其它第三方库，有时候问题并不好排查，即使排查出来也是很棘手，所以，就像松本建议的那样，如果要使用猴子补丁，那么只是做功能追加，尽量避免大规模的API覆盖</p>
+<p> <em>虽然猴子补丁仍然是邪恶的(evil)，但在这种情况下它是“有用的邪恶(useful evil)”。</em></p>
+<p><em>（3）python中使用gevent的猴子补丁的举例</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import socket</span><br><span class="line">print(socket.socket)</span><br><span class="line"> </span><br><span class="line">print(&quot;Aftermonkey patch&quot;)</span><br><span class="line">from gevent importmonkey</span><br><span class="line">monkey.patch_socket()</span><br><span class="line">print(socket.socket)</span><br><span class="line"> </span><br><span class="line">import select</span><br><span class="line">print(select.select)</span><br><span class="line">monkey.patch_select()</span><br><span class="line">print(&quot;Aftermonkey patch&quot;)</span><br><span class="line">print(select.select)</span><br></pre></td></tr></table></figure>
+
+<p>python中使用补丁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Example():</span><br><span class="line">    def func1(self):</span><br><span class="line">        print(&#39;我才是原装&#39;)</span><br><span class="line"></span><br><span class="line">def func2(*args):</span><br><span class="line">    print(&#39;我要取代你&#39;)</span><br><span class="line"></span><br><span class="line">def func3(*args):</span><br><span class="line">    print(&#39;都给我一边去&#39;)</span><br><span class="line"></span><br><span class="line">instance &#x3D; Example()</span><br><span class="line">Example.func1 &#x3D; func2</span><br><span class="line">instance.func1() # 我要取代你</span><br><span class="line">instance.func1 &#x3D; func3</span><br><span class="line">instance.func1() # 都给我一边去</span><br><span class="line">instance2 &#x3D; Example()</span><br><span class="line">instance2.func1() # 我要取代你</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/monkey-patch/" data-id="cka15giq000040ni05pkb3cmd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">uwsgi wsgi WSGI 区别</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/peocess/" rel="tag">peocess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/peocess/" style="font-size: 10px;">peocess</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15px;">数据结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/05/10/monkey-patch/">monkey patch</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/uwsgi-wsgi-WSGI-%E5%8C%BA%E5%88%AB/">uwsgi wsgi WSGI 区别</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/mysql-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">mysql 基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/%E6%95%B0%E6%8D%AE%E5%BA%93ACID/">数据库ACID</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/05/10/linux-%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8Bpython-%E8%B0%83%E7%94%A8%E6%A0%88/">linux 如何查看python 调用栈</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 wuguobin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

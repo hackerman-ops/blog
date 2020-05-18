@@ -5,22 +5,15 @@
   
 
   
-  <title>多线程多进程区别 | Make it different</title>
+  <title>Make it different</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="什么是线程线程是操作系统能够进行调度的最小单位,它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。一个线程是一个execution context（执行上下文），即一个cpu执行时所需要的一串指令。  线程工作方式假设你正在读一本书，没有读完，你想休息一下，但是你想在回来时恢复到当时读的具体进度。有一个方">
-<meta property="og:type" content="article">
-<meta property="og:title" content="多线程多进程区别">
-<meta property="og:url" content="https://hackerman-ops.github.io/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Make it different">
+<meta property="og:url" content="https://hackerman-ops.github.io/blog/page/3/index.html">
 <meta property="og:site_name" content="Make it different">
-<meta property="og:description" content="什么是线程线程是操作系统能够进行调度的最小单位,它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。一个线程是一个execution context（执行上下文），即一个cpu执行时所需要的一串指令。  线程工作方式假设你正在读一本书，没有读完，你想休息一下，但是你想在回来时恢复到当时读的具体进度。有一个方">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images2015.cnblogs.com/blog/1113510/201707/1113510-20170703163116440-978220497.png">
-<meta property="article:published_time" content="2020-05-08T13:22:21.000Z">
-<meta property="article:modified_time" content="2020-05-16T13:56:04.195Z">
 <meta property="article:author" content="wuguobin">
-<meta property="article:tag" content="process">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/1113510/201707/1113510-20170703163116440-978220497.png">
   
     <link rel="alternate" href="/blog/atom.xml" title="Make it different" type="application/atom+xml">
   
@@ -73,7 +66,197 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-多线程多进程区别" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-散列表冲突" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" class="article-date">
+  <time datetime="2020-05-10T04:24:03.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/">散列表冲突</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>散列冲突的解决办法，开放寻址法和链表法。</strong></p>
+<p><strong>开放寻址法</strong></p>
+<p>我们先来看看，开放寻址法的优点有哪些。</p>
+<p>开放寻址法不像链表法，需要拉很多链表。散列表中的数据都存储在数组中，可以有效地利用 CPU 缓存加快查询速度。而且，这种方法实现的散列表，序列化起来比较简单。链表法包含指针，序列化起来就没那么容易。你可不要小看序列化，很多场合都会用到的。我们后面就有一节会讲什么是数据结构序列化、如何序列化，以及为什么要序列化。</p>
+<p>我们再来看下，开放寻址法有哪些缺点。上一节我们讲到，用开放寻址法解决冲突的散列表，删除数据的时候比较麻烦，需要特殊标记已经删除掉的数据。而且，在开放寻址法中，所有的数据都存储在一个数组中，比起链表法来说，冲突的代价更高。</p>
+<p>所以，使用开放寻址法解决冲突的散列表，装载因子的上限不能太大。这也导致这种方法比链表法更浪费内存空间。</p>
+<p>当数据量比较小、装载因子小的时候，适合采用开放寻址法。这也是 Java 中的ThreadLocalMap使用开放寻址法解决散列冲突的原因。</p>
+<p><strong>链表法</strong></p>
+<p>链表法对内存的利用率比开放寻址法要高。因为链表结点可以在需要的时候再创建，并不需要像开放寻址法那样事先申请好。实际上，这一点也是我们前面讲过的链表优于数组的地方。</p>
+<p>链表法比起开放寻址法，对大装载因子的容忍度更高。开放寻址法只能适用装载因子小于 1 的情况。接近 1 时，就可能会有大量的散列冲突，导致大量的探测、再散列等，性能会下降很多。但是对于链表法来说，只要散列函数的值随机均匀，即便装载因子变成 10，也就是链表的长度变长了而已，虽然查找效率有所下降，但是比起顺序查找还是快很多。</p>
+<p>链表因为要存储指针，所以对于比较小的对象的存储，是比较消耗内存的，还有可能会让内存的消耗翻倍。而且，因为链表中的结点是零散分布在内存中的，不是连续的，所以对 CPU 缓存是不友好的，这方面对于执行效率也有一定的影响。</p>
+<p>当然，如果我们存储的是大对象，也就是说要存储的对象的大小远远大于一个指针的大小（4 个字节或者 8 个字节），那链表中指针的内存消耗在大对象面前就可以忽略了。</p>
+<p>我们对链表法稍加改造，可以实现一个更加高效的散列表。那就是，我们将链表法中的链表改造为其他高效的动态数据结构，比如跳表、红黑树。这样，即便出现散列冲突，极端情况下，所有的数据都散列到同一个桶内，那最终退化成的散列表的查找时间也只不过是 O(logn)。这样也就有效避免了前面讲到的散列碰撞攻击。</p>
+<p><img src="https://static001.geekbang.org/resource/image/10/29/103b84d7173277c5565607b413c40129.jpg" alt="img"></p>
+<p>基于链表的散列冲突处理方法比较适合存储大对象、大数据量的散列表，而且，比起开放寻址法，它更加灵活，支持更多的优化策略，比如用红黑树代替链表。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%95%A3%E5%88%97%E8%A1%A8%E5%86%B2%E7%AA%81/" data-id="ckacfykpt0010pzi02goy9fqe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-惊群效应" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" class="article-date">
+  <time datetime="2020-05-10T04:22:59.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/">惊群效应</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="惊群效应是什么"><a href="#惊群效应是什么" class="headerlink" title="惊群效应是什么"></a><strong>惊群效应是什么</strong></h2><p>惊群效应（thundering herd）是指多进程（多线程）在同时阻塞等待同一个事件的时候（休眠状态），如果等待的这个事件发生，那么他就会唤醒等待的所有进程（或者线程），但是最终却只能有一个进程（线程）获得这个时间的“控制权”，对该事件进行处理，而其他进程（线程）获取“控制权”失败，只能重新进入休眠状态，这种现象和性能浪费就叫做惊群效应。</p>
+<h2 id="惊群效应消耗了什么"><a href="#惊群效应消耗了什么" class="headerlink" title="惊群效应消耗了什么"></a><strong>惊群效应消耗了什么</strong></h2><ul>
+<li>Linux 内核对用户进程（线程）频繁地做无效的调度、上下文切换等使系统性能大打折扣。上下文切换（context switch）过高会导致 CPU 像个搬运工，频繁地在寄存器和运行队列之间奔波，更多的时间花在了进程（线程）切换，而不是在真正工作的进程（线程）上面。直接的消耗包括 CPU 寄存器要保存和加载（例如程序计数器）、系统调度器的代码需要执行。间接的消耗在于多核 cache 之间的共享数据。</li>
+<li>为了确保只有一个进程（线程）得到资源，需要对资源操作进行加锁保护，加大了系统的开销。目前一些常见的服务器软件有的是通过锁机制解决的，比如 Nginx（它的锁机制是默认开启的，可以关闭）；还有些认为惊群对系统性能影响不大，没有去处理，比如 Lighttpd。</li>
+</ul>
+<h3 id="accept（）惊群："><a href="#accept（）惊群：" class="headerlink" title="accept（）惊群："></a>accept（）惊群：</h3><p> 首先让我们先来考虑一个场景：<br>​ 主进程创建了socket、bind、listen之后，fork()出来多个进程，每个子进程都开始循环处理（accept）这个listen_fd。每个进程都阻塞在accept上，当一个新的连接到来时候，所有的进程都会被唤醒，但是其中只有一个进程会接受成功，其余皆失败，重新休眠。<br>​ 那么这个问题真的存在吗？<br>​ 历史上，Linux的accpet确实存在惊群问题，但现在的内核都解决该问题了。即，当多个进程/线程都阻塞在对同一个socket的接受调用上时，当有一个新的连接到来，内核只会唤醒一个进程，其他进程保持休眠，压根就不会被唤醒。</p>
+<p>原文链接：<a href="https://blog.csdn.net/lyztyycode/java/article/details/78648798" target="_blank" rel="noopener">https://blog.csdn.net/lyztyycode/java/article/details/78648798</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" data-id="ckacfykpo000vpzi0fn5b57ml" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Django-中间件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="article-date">
+  <time datetime="2020-05-10T02:56:17.000Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/">Django 中间件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>中间件是一个用来处理Django的请求和响应的框架级别的钩子。它是一个轻量、低级别的插件系统，用于在全局范围内改变Django的输入和输出。每个中间件组件都负责做一些特定的功能。</p>
+<p>但是由于其影响的是全局，所以需要谨慎使用，使用不当会影响性能。</p>
+<p>说的直白一点中间件是帮助我们在视图函数执行之前和执行之后都可以做一些额外的操作，它本质上就是一个自定义类，类中定义了几个方法，Django框架会在请求的特定的时间去执行这些方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/Django-%E4%B8%AD%E9%97%B4%E4%BB%B6/" data-id="ckacfykp50003pzi037p6993d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/10/hello-world/" class="article-date">
+  <time datetime="2020-05-10T02:34:49.724Z" itemprop="datePublished">2020-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/10/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/hello-world/" data-id="ckacfykp90005pzi03ubm1cus" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-多线程多进程区别" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/" class="article-date">
   <time datetime="2020-05-08T13:22:21.000Z" itemprop="datePublished">2020-05-08</time>
@@ -86,8 +269,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      多线程多进程区别
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/">多线程多进程区别</a>
     </h1>
   
 
@@ -260,23 +443,16 @@
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/blog/2020/05/10/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
-  
-  
-</nav>
+</article>
+
 
   
-</article>
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
 
 </section>
         

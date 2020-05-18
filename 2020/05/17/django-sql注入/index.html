@@ -5,14 +5,19 @@
   
 
   
-  <title>Tag: linux | Make it different</title>
+  <title>django sql注入 | Make it different</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Make it different">
-<meta property="og:url" content="https://hackerman-ops.github.io/blog/tags/linux/index.html">
+  <meta name="description" content="SQL注入把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令 利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句  永远不要信任用户的输入。对用户的输入进行校验，可以通过正则表达式，或限制长度；对单引号和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django sql注入">
+<meta property="og:url" content="https://hackerman-ops.github.io/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="Make it different">
+<meta property="og:description" content="SQL注入把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令 利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句  永远不要信任用户的输入。对用户的输入进行校验，可以通过正则表达式，或限制长度；对单引号和">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-17T13:26:03.000Z">
+<meta property="article:modified_time" content="2020-05-17T14:56:16.898Z">
 <meta property="article:author" content="wuguobin">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/blog/atom.xml" title="Make it different" type="application/atom+xml">
@@ -66,78 +71,77 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/blog/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2020/05/16/kill-9/" class="archive-article-date">
-  <time datetime="2020-05-16T13:55:00.000Z" itemprop="datePublished">May 16</time>
+        <section id="main"><article id="post-django-sql注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time datetime="2020-05-17T13:26:03.000Z" itemprop="datePublished">2020-05-17</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2020/05/16/kill-9/">kill -9</a>
+    <h1 class="article-title" itemprop="name">
+      django sql注入
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/" class="archive-article-date">
-  <time datetime="2020-05-10T04:34:30.000Z" itemprop="datePublished">May 10</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2020/05/10/%E8%BF%9B%E7%A8%8B%E5%81%87%E6%AD%BB%E7%8E%B0%E8%B1%A1/">进程假死现象</a>
-    </h1>
-  
+        <h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令</p>
+<p>利用现有应用程序，将（恶意的）SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句</p>
+<ol>
+<li><p>永远不要信任用户的输入。对用户的输入进行校验，可以通过正则表达式，或限制长度；对单引号和 双’-‘进行转换等。</p>
+</li>
+<li><p>永远不要使用动态拼装sql，可以使用参数化的sql或者直接使用存储过程进行数据查询存取。</p>
+</li>
+<li><p>永远不要使用管理员权限的数据库连接，为每个应用使用单独的权限有限的数据库连接。</p>
+</li>
+<li><p>不要把机密信息直接存放，加密或者hash掉密码和敏感的信息。</p>
+</li>
+<li><p>应用的异常信息应该给出尽可能少的提示，最好使用自定义的错误信息对原始错误信息进行包装。</p>
+</li>
+</ol>
+<p><strong>利用Dajngo的ORM可有效避免sql注入，因为Django已经对特殊字符进行转义</strong></p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/" class="archive-article-date">
-  <time datetime="2020-05-10T04:22:59.000Z" itemprop="datePublished">May 10</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/blog/2020/05/10/%E6%83%8A%E7%BE%A4%E6%95%88%E5%BA%94/">惊群效应</a>
-    </h1>
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/" data-id="ckacfykov0000pzi06fqp493d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2020/05/17/django-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          django 安全编码问题
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/blog/2020/05/17/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%89%AF%E5%A5%BDAPI/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何设计良好API</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         

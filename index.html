@@ -68,6 +68,280 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-django-架构总览图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/24/django-%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%E5%9B%BE/" class="article-date">
+  <time datetime="2020-05-24T14:05:47.000Z" itemprop="datePublished">2020-05-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/24/django-%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%E5%9B%BE/">django 架构总览图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="架构总览图"><a href="#架构总览图" class="headerlink" title="架构总览图"></a>架构总览图</h3><p>############################################################################################################</p>
+<p><img src="2020/05/24/django-%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%E5%9B%BE/django%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88.png" alt></p>
+<h3 id="请求流程图"><a href="#请求流程图" class="headerlink" title="请求流程图"></a>请求流程图</h3><p>############################################################################################################</p>
+<p><img src="djangohttp.png" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/24/django-%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%E5%9B%BE/" data-id="ckammtq3y0005wui0e5i6bzwu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-django-启动过程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/24/django-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="article-date">
+  <time datetime="2020-05-24T06:30:20.000Z" itemprop="datePublished">2020-05-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/24/django-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">django 启动过程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/home/hacker/my_blog/source/_posts/django-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/django%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png" alt></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/24/django-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" data-id="ckammtq3x0004wui0dwge98wp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-redis-interview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/23/redis-interview/" class="article-date">
+  <time datetime="2020-05-23T07:00:16.000Z" itemprop="datePublished">2020-05-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/23/redis-interview/">redis interview</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="redis有哪些数据结构"><a href="#redis有哪些数据结构" class="headerlink" title="redis有哪些数据结构"></a>redis有哪些数据结构</h4><p>字符串String、字典Hash、列表List、集合Set、有序集合SortedSet，</p>
+<p>下面几种数据结构HyperLogLog、Geo、Pub/Sub</p>
+<p>Redis Module诸如像BloomFilter，RedisSearch，Redis-ML</p>
+<h5 id="redis分布式锁"><a href="#redis分布式锁" class="headerlink" title="redis分布式锁"></a>redis分布式锁</h5><p>setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。</p>
+<p>如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？</p>
+<p>set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的</p>
+<h5 id="指定模式key列表"><a href="#指定模式key列表" class="headerlink" title="指定模式key列表"></a>指定模式key列表</h5><p>假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？</p>
+<p>使用keys指令可以扫出指定模式的key列表。</p>
+<p>如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？</p>
+<p>这个时候你要回答redis关键的一个特性：redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。</p>
+<h5 id="redis如何做异步队列"><a href="#redis如何做异步队列" class="headerlink" title="redis如何做异步队列"></a>redis如何做异步队列</h5><p>一般使用list结构作为队列，rpush生产消息，lpop消费消息。当lpop没有消息的时候，要适当sleep一会再重试。</p>
+<p>如果对方追问可不可以不用sleep呢？list还有个指令叫blpop，在没有消息的时候，它会阻塞住直到消息到来。</p>
+<p>能不能生产一次消费多次呢？使用pub/sub主题订阅者模式，可以实现1:N的消息队列。</p>
+<p>如果对方追问pub/sub有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如rabbitmq等。</p>
+<h5 id="redis如何做延时队列"><a href="#redis如何做延时队列" class="headerlink" title="redis如何做延时队列"></a>redis如何做延时队列</h5><p>使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。</p>
+<h5 id="如果大量key同一时间过期"><a href="#如果大量key同一时间过期" class="headerlink" title="如果大量key同一时间过期"></a>如果大量key同一时间过期</h5><p>如果大量的key过期时间设置的过于集中，到过期的那个时间点，redis可能会出现短暂的卡顿现象。一般需要在时间上加一个随机值，使得过期时间分散一些。</p>
+<h5 id="redis如何做持久化"><a href="#redis如何做持久化" class="headerlink" title="redis如何做持久化"></a>redis如何做持久化</h5><p>bgsave做镜像全量持久化，aof做增量持久化。因为bgsave会耗费较长时间，不够实时，在停机的时候会导致大量丢失数据，所以需要aof来配合使用。在redis实例重启时，优先使用aof来恢复内存的状态，如果没有aof日志，就会使用rdb文件来恢复。</p>
+<p>如果再问aof文件过大恢复时间过长怎么办？你告诉面试官，Redis会定期做aof重写，压缩aof文件日志大小。如果面试官不够满意，再拿出杀手锏答案，Redis4.0之后有了混合持久化的功能，将bgsave的全量和aof的增量做了融合处理，这样既保证了恢复的效率又兼顾了数据的安全性。这个功能甚至很多面试官都不知道，他们肯定会对你刮目相看。</p>
+<p>如果对方追问那如果突然机器掉电会怎样？取决于aof日志sync属性的配置，如果不要求性能，在每条写指令时都sync一下磁盘，就不会丢失数据。但是在高性能的要求下每次都sync是不现实的，一般都使用定时sync，比如1s1次，这个时候最多就会丢失1s的数据。</p>
+<p>如果对方追问bgsave的原理是什么？你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行bgsave操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。</p>
+<h5 id="Pipeline有什么好处，为什么要用pipeline？"><a href="#Pipeline有什么好处，为什么要用pipeline？" class="headerlink" title="Pipeline有什么好处，为什么要用pipeline？"></a>Pipeline有什么好处，为什么要用pipeline？</h5><p>可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。使用redis-benchmark进行压测的时候可以发现影响redis的QPS峰值的一个重要因素是pipeline批次指令的数目。</p>
+<h5 id="Redis的同步机制了解么？"><a href="#Redis的同步机制了解么？" class="headerlink" title="Redis的同步机制了解么？"></a>Redis的同步机制了解么？</h5><p>Redis可以使用主从同步，从从同步。第一次同步时，主节点做一次bgsave，并同时将后续修改操作记录到内存buffer，待完成后将rdb文件全量同步到复制节点，复制节点接受完成后将rdb镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。</p>
+<h5 id="是否使用过Redis集群，集群的原理是什么？"><a href="#是否使用过Redis集群，集群的原理是什么？" class="headerlink" title="是否使用过Redis集群，集群的原理是什么？"></a>是否使用过Redis集群，集群的原理是什么？</h5><p>Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。</p>
+<p>Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/23/redis-interview/" data-id="ckammtq4h000zwui07ko8d3jx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-redis-API-test" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/22/redis-API-test/" class="article-date">
+  <time datetime="2020-05-22T15:50:04.000Z" itemprop="datePublished">2020-05-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/22/redis-API-test/">redis API test</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="安利个人用redis监控软件"><a href="#安利个人用redis监控软件" class="headerlink" title="安利个人用redis监控软件"></a>安利个人用redis监控软件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull vieux&#x2F;redmon</span><br><span class="line">sudo docker run --net&#x3D;host -d  vieux&#x2F;redmon -r redis:&#x2F;&#x2F;127.0.0.1:6380</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/22/redis-API-test/" data-id="ckammtq4e000xwui03mzsadtv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-分布式锁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/05/18/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="article-date">
+  <time datetime="2020-05-18T12:27:51.000Z" itemprop="datePublished">2020-05-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/05/18/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="分布式锁的实现有哪些？"><a href="#分布式锁的实现有哪些？" class="headerlink" title="分布式锁的实现有哪些？"></a>分布式锁的实现有哪些？</h3><p><strong>1.Memcached分布式锁</strong></p>
+<p>利用Memcached的<strong>add命令</strong>。此命令是原子性操作，只有在key不存在的情况下，才能add成功，也就意味着线程得到了锁。</p>
+<p><strong>2.Redis分布式锁</strong></p>
+<p>和Memcached的方式类似，利用Redis的<strong>setnx命令</strong>。此命令同样是原子性操作，只有在key不存在的情况下，才能set成功。（setnx命令并不完善，后续会介绍替代方案）</p>
+<p><strong>3.Zookeeper分布式锁</strong></p>
+<p>利用Zookeeper的<strong>顺序临时节点</strong>，来实现分布式锁和等待队列。Zookeeper设计的初衷，就是为了实现分布式锁服务的。</p>
+<p><strong>4.Chubby</strong></p>
+<p>Google公司实现的粗粒度分布式锁服务，底层利用了Paxos一致性算法。</p>
+<h3 id="如何使用redis实现分布式锁"><a href="#如何使用redis实现分布式锁" class="headerlink" title="如何使用redis实现分布式锁"></a>如何使用redis实现分布式锁</h3><p><strong>1.加锁</strong></p>
+<p>最简单的方法是使用setnx命令。key是锁的唯一标识，按业务来决定命名。比如想要给一种商品的秒杀活动加锁，可以给key命名为 “lock_sale_商品ID” 。而value设置成什么呢？我们可以姑且设置成1。加锁的伪代码如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setnx（key，1）</span><br></pre></td></tr></table></figure>
+
+
+
+<p>当一个线程执行setnx返回1，说明key原本不存在，该线程成功得到了锁；当一个线程执行setnx返回0，说明key已经存在，该线程抢锁失败。</p>
+<p><strong>2.解锁</strong></p>
+<p>有加锁就得有解锁。当得到锁的线程执行完任务，需要释放锁，以便其他线程可以进入。释放锁的最简单方式是执行del指令，伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">del（key）</span><br></pre></td></tr></table></figure>
+
+<p>释放锁之后，其他线程就可以继续执行setnx命令来获得锁。</p>
+<p><strong>3.锁超时</strong></p>
+<p>如果一个得到锁的线程在执行任务的过程中挂掉，来不及显式地释放锁，这块资源将会永远被锁住，别的线程再也别想进来。</p>
+<p>所以，setnx的key必须设置一个超时时间，以保证即使没有被显式释放，这把锁也要在一定时间后自动释放。setnx不支持超时参数，所以需要额外的指令，伪代码如下：</p>
+<p><strong>expire（key， 30）</strong></p>
+<p>综合起来，我们分布式锁实现的第一版伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if（setnx（key，1） &#x3D;&#x3D; 1）&#123;</span><br><span class="line"></span><br><span class="line">  expire（key，30）</span><br><span class="line"></span><br><span class="line">  try &#123;</span><br><span class="line"></span><br><span class="line">   *\*do something ......\</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &#125; finally &#123;</span><br><span class="line">   *\*del（key）\**</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>告警 BUG</strong></p>
+<p>#######################################################################</p>
+<h4 id="1-setnx和expire的非原子性"><a href="#1-setnx和expire的非原子性" class="headerlink" title="1 setnx和expire的非原子性"></a>1 setnx和expire的非原子性</h4><p>当某线程执行setnx，成功得到了锁：setnx刚执行成功，还未来得及执行expire指令，节点1 Duang的一声挂掉了。幸好Redis 2.6.12以上版本为<strong>set</strong>指令增加了可选参数，伪代码如下：</p>
+<p><strong>set（key，1，30，NX）</strong></p>
+<p>这样就可以取代setnx指令。</p>
+<p>########################################################################</p>
+<h4 id="2-del-误删"><a href="#2-del-误删" class="headerlink" title="2 del 误删"></a>2 del 误删</h4><p>假如某线程A成功得到了锁，并且设置的超时时间是30秒。</p>
+<p>如果某些原因导致线程A执行的很慢很慢，过了30秒都没执行完，这时候锁过期自动释放，线程B得到了锁。</p>
+<p>随后，线程A执行完了任务，线程A接着执行del指令来释放锁。但这时候线程B还没执行完，<strong>线程A实际上删除的是线程B加的锁</strong>。</p>
+<p>怎么避免这种情况呢？可以在del释放锁之前做一个判断，验证当前的锁是不是自己加的锁。</p>
+<p>至于具体的实现，可以在加锁的时候把当前的线程ID当做value，并在删除之前验证key对应的value是不是自己线程的ID。</p>
+<p>加锁：</p>
+<p><strong>String threadId = Thread.currentThread().getId()</strong></p>
+<p>set（key，threadId，30，NX）</p>
+<p>解锁：</p>
+<p><strong>if（**</strong>threadId** <strong>.equals(redisClient.get(\</strong>key**))）{</p>
+<p>  del(key)</p>
+<p><strong>}</strong></p>
+<p>但是，这样做又隐含了一个新的问题，<strong>判断和释放锁是两个独立操作，不是原子性</strong>。</p>
+<p>原子执行即可</p>
+<p>#########################################################################</p>
+<h4 id="出现并发可能性"><a href="#出现并发可能性" class="headerlink" title="出现并发可能性"></a>出现并发可能性</h4><p>我们避免了线程A误删掉key的情况，但是同一时间有A，B两个线程在访问代码块，仍然是不完美的。</p>
+<p>线程好长时间没执行完，需要给锁续命</p>
+<p>我们可以让获得锁的线程开启一个<strong>守护线程</strong>，用来给快要过期的锁“续航”。</p>
+<p>当过去了29秒，线程A还没执行完，这时候守护线程会执行expire指令，为这把锁“续命”20秒。守护线程从第29秒开始执行，每20秒执行一次。</p>
+<p>当线程A执行完任务，会显式关掉守护线程。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/18/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" data-id="ckammtq4l0016wui00ydvg1pz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-django-安全编码问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/05/17/django-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="article-date">
@@ -101,8 +375,8 @@
 <h3 id="伪造跨站点请求"><a href="#伪造跨站点请求" class="headerlink" title="伪造跨站点请求"></a>伪造跨站点请求</h3><p>伪造跨站点请求(CSRF)发生在当某个恶意Web站点诱骗用户不知不觉的从一个信任站点下载某个URL之时，这个信任站点已经被通过信任验证，因此恶意站点就利用了这个被信任状态。</p>
 <p>Django拥有内建工具来防止这种攻击</p>
 <h4 id="使用CSRF中间件"><a href="#使用CSRF中间件" class="headerlink" title="使用CSRF中间件"></a>使用CSRF中间件</h4><p><code>django.contrib.csrf</code> 开发包只有一个模块： <code>middleware.py</code> 。该模块包含了一个 Django 中间件类—— <code>CsrfMiddleware</code> ，该类实现了 CSRF 防护功能。</p>
-<p>在设置文件中将 <code>&#39;django.contrib.csrf.middleware.CsrfMiddleware&#39;</code> 添加到 <code>MIDDLEWARE_CLASSES</code> 设置中可激活 CSRF 防护。 该中间件必须在 <code>SessionMiddleware</code> <em>之后</em> 执行，因此在列表中 <code>CsrfMiddleware</code> 必须出现在 <code>SessionMiddleware</code> <em>之前</em> （因为响应中间件是自后向前执行的）。 同时，它也必须在响应被压缩或解压之前对响应结果进行处理，因此 <code>CsrfMiddleware</code> 必须在 <code>GZipMiddleware</code> 之后执行。一旦将它添加到<code>MIDDLEWARE_CLASSES</code>设置中，你就完成了工作。 参见第十五章的“MIDDLEWARE_CLASSES顺序”小节以了解更多。</p>
-<p>如果感兴趣的话，下面是 <code>CsrfMiddleware</code> 的工作模式。 它完成以下两项工作：</p>
+<p>在设置文件中将 <code>&#39;django.contrib.csrf.middleware.CsrfMiddleware&#39;</code> 添加到 <code>MIDDLEWARE_CLASSES</code> 设置中可激活 CSRF 防护。 该中间件必须在 <code>SessionMiddleware</code> <em>之后</em> 执行，因此在列表中 <code>CsrfMiddleware</code> 必须出现在 <code>SessionMiddleware</code> <em>之前</em> （因为响应中间件是自后向前执行的）。 同时，它也必须在响应被压缩或解压之前对响应结果进行处理，因此 <code>CsrfMiddleware</code> 必须在 <code>GZipMiddleware</code> 之后执行。一旦将它添加到<code>MIDDLEWARE_CLASSES</code>设置中，你就完成了工作。 </p>
+<p>下面是 <code>CsrfMiddleware</code> 的工作模式。 它完成以下两项工作：</p>
 <ol>
 <li>它修改当前处理的请求，向所有的 <code>POST</code> 表单增添一个隐藏的表单字段，使用名称是 <code>csrfmiddlewaretoken</code> ，值为当前会话 ID 加上一个密钥的散列值。 如果未设置会话 ID ，该中间件将 <em>不会</em> 修改响应结果，因此对于未使用会话的请求来说性能损失是可以忽略的。</li>
 </ol>
@@ -114,7 +388,6 @@
 <p>未使用会话 cookie 的 <code>POST</code> 请求无法受到保护，但它们也不 <em>需要</em> 受到保护，因为恶意网站可用任意方法来制造这种请求。</p>
 <p>为了避免转换非 HTML 请求，中间件在编辑响应结果之前对它的 <code>Content-Type</code> 头标进行检查。 只有标记为 <code>text/html</code> 或 <code>application/xml+xhtml</code> 的页面才会被修改。</p>
 <h3 id="会话伪造-劫持"><a href="#会话伪造-劫持" class="headerlink" title="会话伪造/劫持"></a>会话伪造/劫持</h3><p>对用户会话数据的通用类攻击。 这种攻击可以采取多种形式：</p>
-<blockquote>
 <p><em>中间人</em> 攻击：检索所在有线（无线）网络，监听会话数据。</p>
 <p><em>伪造会话</em> ：攻击者利用会话ID（可能是通过中间人攻击来获得）将自己伪装成另一个用户。</p>
 <p>这两种攻击的一个例子可以是在一间咖啡店里的某个攻击者利用店内的无线网络来捕获某个会话cookie，然后她就可以利用那个cookie来假冒原始用户。 她便可以使该cookie来模拟原始用户。</p>
@@ -126,9 +399,7 @@
 <p>会话滞留已经运用在钓鱼攻击中，以诱骗用户在攻击者拥有的账号里输入其个人信息。 他可以稍后登陆账户并且检索数据。</p>
 <p><em>会话中毒</em> ：攻击者通过用户提交设置会话数据的Web表单向该用户会话中注入潜在危险数据。</p>
 <p>一个经典的例子就是一个站点在某个cookie中存储了简单的用户偏好（比如一个页面背景颜色）。 攻击者可以诱骗用户点击一个链接来提交背景颜色，实际上包含了一个XSS攻击。 如果颜色没有转义，那么就可以再把恶意代码注入到用户环境中。</p>
-</blockquote>
 <p><strong>解决方案：</strong></p>
-<blockquote>
 <p>不要在URL中包含任何session信息。</p>
 <p>Django的session框架（参见<code>第十四章 &lt;../chapter14/&gt;</code>__ ）根本不会容许session包含在URL中。</p>
 <p>不要直接在cookie中保存数据。 相反，存储一个在后台映射到session数据存储的session ID。</p>
@@ -136,7 +407,6 @@
 <p>如果需要在模板中显示session数据，要记得对其进行转义。 可参考之前的XSS部分，对所有用户提交的数据和浏览器提交的数据进行转义。 对于session信息，应该像用户提交的数据一样对其进行处理。</p>
 <p>任何可能的地方都要防止攻击者进行session欺骗。</p>
 <p>尽管去探测究竟是谁劫持了会话ID是几乎不可能的事儿，Django还是内置了保护措施来抵御暴力会话攻击。 会话ID被存在哈希表里（取代了序列数字），这样就阻止了暴力攻击，并且如果一个用户去尝试一个不存在的会话那么她总是会得到一个新的会话ID，这样就阻止了会话滞留。</p>
-</blockquote>
 <p>请注意，以上没有一种准则和工具能够阻止中间人攻击。 这些类型的攻击是几乎不可能被探测的。 如果你的站点允许登陆用户去查看任意敏感数据的话，你应该 <em>总是</em> 通过HTTPS来提供网站服务。 此外，如果你的站点使用SSL，你应该将 <code>SESSION_COOKIE_SECURE</code> 设置为 <code>True</code> ，这样就能够使Django只通过HTTPS发送会话cookie。</p>
 <h3 id="邮件头部注入"><a href="#邮件头部注入" class="headerlink" title="邮件头部注入"></a>邮件头部注入</h3><p><em>邮件头部注入</em> ：SQL注入的兄弟，是一种通过劫持发送邮件的Web表单的攻击方式。 攻击者能够利用这种技术来通过你的邮件服务器发送垃圾邮件。 在这种攻击面前，任何方式的来自Web表单数据的邮件头部构筑都是非常脆弱的。</p>
 <p>让我们看看在我们许多网站中发现的这种攻击的形式。 通常这种攻击会向硬编码邮件地址发送一个消息，因此，第一眼看上去并不显得像面对垃圾邮件那么脆弱。</p>
@@ -169,7 +439,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/django-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" data-id="ckacfykqg001hpzi00m5c6xqz" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/django-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" data-id="ckammtq53001swui049ln1lvk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -222,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/" data-id="ckacfykov0000pzi06fqp493d" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/" data-id="ckammtq3v0003wui03yhw5kg1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
@@ -326,7 +596,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%89%AF%E5%A5%BDAPI/" data-id="ckacfykpm000rpzi0fehnfwon" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%89%AF%E5%A5%BDAPI/" data-id="ckammtq4m0018wui0fa3p5iwz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/web/" rel="tag">web</a></li></ul>
@@ -364,7 +634,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/python-interview/" data-id="ckacfykpg000fpzi00vl7cjch" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/17/python-interview/" data-id="ckammtq4c000swui0b1hjac0n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -400,334 +670,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/16/faust-demo/" data-id="ckacfykp70004pzi0785x0oab" class="article-share-link">Share</a>
+      <a data-url="https://hackerman-ops.github.io/blog/2020/05/16/faust-demo/" data-id="ckammtq3z0008wui01wftgjjf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python-kafka/" rel="tag">python kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kill-9" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/16/kill-9/" class="article-date">
-  <time datetime="2020-05-16T13:55:00.000Z" itemprop="datePublished">2020-05-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/16/kill-9/">kill -9</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="kill-命令"><a href="#kill-命令" class="headerlink" title="kill 命令"></a><strong>kill 命令</strong></h2><p>在Linux中终止一个进程有两种方式，如果是前台进程可以使用Ctrl+C键进行终止；如果是后台进程，那么需要使用kill命令来终止。（其实Ctrl+C也是kill命令）</p>
-<p>kill命令的格式是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kill[参数][进程号]</span><br><span class="line">如：</span><br><span class="line">kill 21121</span><br><span class="line">kill -9 21121</span><br></pre></td></tr></table></figure>
-
-<p>其中[参数]是可选的，进程号可以通过jps/ps/pidof/pstree/top等工具获取。</p>
-<p>kill的命令参数有以下几种：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-l 信号，若果不加信号的编号参数，则使用“-l”参数会列出全部的信号名称</span><br><span class="line"></span><br><span class="line">-a 当处理当前进程时，不限制命令名和进程号的对应关系</span><br><span class="line"></span><br><span class="line">-p 指定kill 命令只打印相关进程的进程号，而不发送任何信号</span><br><span class="line"></span><br><span class="line">-s 指定发送信号</span><br><span class="line"></span><br><span class="line">-u 指定用户</span><br></pre></td></tr></table></figure>
-
-<p>通常情况下，我们使用的-l(信号)的时候比较多，如我们前文提到的kill -9中的9就是信号。</p>
-<p>信号如果没有指定的话，默认会发出终止信号(15)。常用的信号如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HUP 1 终端断线</span><br><span class="line"></span><br><span class="line">INT 2 中断（同 Ctrl + C）</span><br><span class="line"></span><br><span class="line">QUIT 3 退出（同 Ctrl + \）</span><br><span class="line"></span><br><span class="line">TERM 15 终止</span><br><span class="line"></span><br><span class="line">KILL 9 强制终止</span><br><span class="line"></span><br><span class="line">CONT 18 继续（与STOP相反， fg&#x2F;bg命令）</span><br><span class="line"></span><br><span class="line">STOP 19 暂停（同 Ctrl + Z）</span><br></pre></td></tr></table></figure>
-
-<p>比较常用的就是强制终止信号：9和终止信号：15，另外，中断信号：2其实就是我们前文提到的Ctrl + C结束前台进程。</p>
-<p>那么，kill -9 和 kill -15到底有什么区别呢？该如何选择呢？</p>
-<h2 id="kill-9-和-kill-15的区别"><a href="#kill-9-和-kill-15的区别" class="headerlink" title="kill -9 和 kill -15的区别"></a><strong>kill -9 和 kill -15的区别</strong></h2><p>kill命令默认的信号就是15，首先来说一下这个默认的kill -15信号。</p>
-<p>当使用kill -15时，系统会发送一个SIGTERM的信号给对应的程序。当程序接收到该信号后，具体要如何处理是自己可以决定的。</p>
-<p>这时候，应用程序可以选择：</p>
-<p>1、立即停止程序2、释放响应资源后停止程序3、忽略该信号，继续执行程序</p>
-<p>因为kill -15信号只是通知对应的进程要进行”安全、干净的退出”，程序接到信号之后，退出前一般会进行一些”准备工作”，如资源释放、临时文件清理等等，如果准备工作做完了，再进行程序的终止。</p>
-<p>但是，如果在”准备工作”进行过程中，遇到阻塞或者其他问题导致无法成功，那么应用程序可以选择忽略该终止信号。</p>
-<p>这也就是为什么我们有的时候使用kill命令是没办法”杀死”应用的原因，<strong>因为默认的kill信号是SIGTERM（15），而SIGTERM（15）的信号是可以被阻塞和忽略的。</strong></p>
-<p>和kill -15相比，kill -9就相对强硬一点，系统会发出SIGKILL信号，他要求接收到该信号的程序应该立即结束运行，不能被阻塞或者忽略。</p>
-<p>所以，<strong>相比于kill -15命令，kill -9在执行时，应用程序是没有时间进行”准备工作”的，所以这通常会带来一些副作用，数据丢失或者终端无法恢复到正常状态等</strong></p>
-<p><strong>重点：非必要不要执行 kill -9 命令</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/16/kill-9/" data-id="ckacfykpb0008pzi0co2kcsl9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kafka-base" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/16/kafka-base/" class="article-date">
-  <time datetime="2020-05-16T12:50:44.000Z" itemprop="datePublished">2020-05-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/16/kafka-base/">kafka base</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>前言</p>
-</li>
-<li><p>一、Kafka基础</p>
-</li>
-<li><ul>
-<li>消息系统的作用</li>
-<li>1.Topic 主题</li>
-<li>2.Partition 分区</li>
-<li>3.Producer - 生产者</li>
-<li>4.Consumer - 消费者</li>
-<li>5.Message - 消息</li>
-</ul>
-</li>
-<li><p>二、kafka的集群架构</p>
-</li>
-<li><ul>
-<li>Replica - 副本</li>
-<li>Consumer Group - 消费者组</li>
-<li>Controller</li>
-<li>kafka和zookeeper如何配合工作</li>
-</ul>
-</li>
-<li><p>加餐时间</p>
-</li>
-<li><ul>
-<li>1.Kafka性能好在什么地方？</li>
-<li>2.日志分段存储</li>
-<li>3.Kafka的网络设计</li>
-<li></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>应大部分的小伙伴的要求，在Yarn之前先来一个kafka的小插曲，轻松愉快。</p>
-<h2 id="一、Kafka基础"><a href="#一、Kafka基础" class="headerlink" title="一、Kafka基础"></a>一、Kafka基础</h2><h2 id="消息系统的作用"><a href="#消息系统的作用" class="headerlink" title="消息系统的作用"></a>消息系统的作用</h2><p>引入一个场景，我们知道中国移动，中国联通，中国电信的日志处理，是交给外包去做大数据分析的，假设现在它们的日志都交给了你做的系统去做用户画像分析。</p>
-<p><img src="2020/05/16/kafka-base/kafka1.png" alt="img"></p>
-<p>按照刚刚前面提到的消息系统的作用，我们知道了消息系统其实就是一个<strong>模拟缓存</strong> ，且<strong>仅仅是起到了缓存的作用</strong> 而并不是真正的缓存，数据仍然是存储在磁盘上面而不是内存。</p>
-<h2 id="1-Topic-主题"><a href="#1-Topic-主题" class="headerlink" title="1.Topic 主题"></a>1.Topic 主题</h2><p>kafka学习了数据库里面的设计，在里面设计了topic（主题），这个东西类似于关系型数据库的表</p>
-<p><img src="https://pic2.zhimg.com/80/v2-32846cde6385e104150543c2bd33e255_720w.jpg" alt="img"></p>
-<p>此时我需要获取中国移动的数据，那就直接监听TopicA即可</p>
-<h2 id="2-Partition-分区"><a href="#2-Partition-分区" class="headerlink" title="2.Partition 分区"></a>2.Partition 分区</h2><p>kafka还有一个概念叫Partition（分区），分区具体在服务器上面表现起初就是一个目录，一个主题下面有多个分区，这些分区会存储到不同的服务器上面，或者说，其实就是在不同的主机上建了不同的目录。这些分区主要的信息就存在了.log文件里面。跟数据库里面的分区差不多，是为了提高性能。</p>
-<p><img src="https://pic4.zhimg.com/80/v2-af7ed1fd8fb43ea93baa9d2db2c4e5c3_720w.jpg" alt="img"></p>
-<p>至于为什么提高了性能，很简单，多个分区多个线程，多个线程并行处理肯定会比单线程好得多</p>
-<p>Topic和partition像是HBASE里的table和region的概念，table只是一个逻辑上的概念，真正存储数据的是region，这些region会分布式地存储在各个服务器上面，对应于kafka，也是一样，<strong>Topic也是逻辑概念</strong> ，而partition就是分布式存储单元。这个设计是保证了海量数据处理的基础。我们可以对比一下，如果HDFS没有block的设计，一个100T的文件也只能单独放在一个服务器上面，那就直接占满整个服务器了，引入block后，大文件可以分散存储在不同的服务器上。</p>
-<p>注意：1.分区会有单点故障问题，所以我们会为每个分区设置副本数</p>
-<p>2.分区的编号是从0开始的</p>
-<h2 id="3-Producer-生产者"><a href="#3-Producer-生产者" class="headerlink" title="3.Producer - 生产者"></a>3.Producer - 生产者</h2><p>往消息系统里面发送数据的就是生产者</p>
-<p><img src="https://pic4.zhimg.com/80/v2-3acb2d8ff2a4672d66ed93f23dfe222b_720w.jpg" alt="img"></p>
-<h2 id="4-Consumer-消费者"><a href="#4-Consumer-消费者" class="headerlink" title="4.Consumer - 消费者"></a>4.Consumer - 消费者</h2><p>从kafka里读取数据的就是消费者</p>
-<p><img src="https://pic3.zhimg.com/80/v2-18604049cbfc5da50c33ea20b241456e_720w.jpg" alt="img"></p>
-<h2 id="5-Message-消息"><a href="#5-Message-消息" class="headerlink" title="5.Message - 消息"></a>5.Message - 消息</h2><p>kafka里面的我们处理的数据叫做消息</p>
-<h2 id="二、kafka的集群架构"><a href="#二、kafka的集群架构" class="headerlink" title="二、kafka的集群架构"></a>二、kafka的集群架构</h2><p>创建一个TopicA的主题，3个分区分别存储在不同的服务器，也就是broker下面。<strong>Topic是一个逻辑上的概念</strong> ，并不能直接在图中把Topic的相关单元画出</p>
-<p><img src="https://pic2.zhimg.com/80/v2-34ac636c297dd20ec43e992bdf034d01_720w.jpg" alt="img"></p>
-<p><strong>需要注意：kafka在0.8版本以前是没有副本机制的，所以在面对服务器宕机的突发情况时会丢失数据，所以尽量避免使用这个版本之前的kafka</strong></p>
-<h2 id="Replica-副本"><a href="#Replica-副本" class="headerlink" title="Replica - 副本"></a>Replica - 副本</h2><p>kafka中的partition为了保证数据安全，所以每个partition可以设置多个副本。</p>
-<p>此时我们对分区0,1,2分别设置3个副本（其实设置两个副本是比较合适的）</p>
-<p><img src="https://pic3.zhimg.com/80/v2-98e71e20de54e547a02a9fd38360ec16_720w.jpg" alt="img"></p>
-<p>而且其实每个副本都是有角色之分的，它们会选取一个副本作为leader，而其余的作为follower，我们的<strong>生产者在发送数据的时候，是直接发送到leader partition里面</strong> ，然后follower partition会去leader那里自行同步数据，<strong>消费者消费数据的时候，也是从leader那去消费数据的</strong> 。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-25f67642f98939529165464e08d8c334_720w.jpg" alt="img"></p>
-<h2 id="Consumer-Group-消费者组"><a href="#Consumer-Group-消费者组" class="headerlink" title="Consumer Group - 消费者组"></a>Consumer Group - 消费者组</h2><p>我们在消费数据时会在代码里面指定一个group.id,这个id代表的是消费组的名字，而且<strong>这个group.id就算不设置，系统也会默认设置</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conf.setProperty(&quot;group.id&quot;,&quot;tellYourDream&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>我们所熟知的一些消息系统一般来说会这样设计，就是只要有一个消费者去消费了消息系统里面的数据，那么其余所有的消费者都不能再去消费这个数据。可是kafka并不是这样,比如现在consumerA去消费了一个topicA里面的数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consumerA:    group.id &#x3D; aconsumerB:    group.id &#x3D; aconsumerC:    group.id &#x3D; bconsumerD:    group.id &#x3D; b</span><br></pre></td></tr></table></figure>
-
-<p>再让consumerB也去消费TopicA的数据，它是消费不到了，但是我们在consumerC中重新指定一个另外的group.id，consumerC是可以消费到topicA的数据的。而consumerD也是消费不到的，所以在kafka中，<strong>不同组可有唯一的一个消费者去消费同一主题的数据</strong> 。</p>
-<p>所以消费者组就是让多个消费者并行消费信息而存在的，而且它们不会消费到同一个消息，如下，consumerA，B，C是不会互相干扰的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consumer group:a    consumerA    consumerB    consumerC</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://pic2.zhimg.com/80/v2-90497c2375653342dc59458dc7543ff9_720w.jpg" alt="img"></p>
-<p>如图，因为前面提到过了消费者会直接和leader建立联系，所以它们分别消费了三个leader，所以<strong>一个分区不会让消费者组里面的多个消费者去消费</strong> ，但是在消费者不饱和的情况下，<strong>一个消费者是可以去消费多个分区的数据的</strong> 。</p>
-<h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><p>熟知一个规律：在大数据分布式文件系统里面，95%的都是主从式的架构，个别是对等式的架构，比如ElasticSearch。</p>
-<p>kafka也是主从式的架构，主节点就叫controller，其余的为从节点，controller是需要和zookeeper进行配合管理整个kafka集群。</p>
-<h2 id="kafka和zookeeper如何配合工作"><a href="#kafka和zookeeper如何配合工作" class="headerlink" title="kafka和zookeeper如何配合工作"></a>kafka和zookeeper如何配合工作</h2><p>kafka严重依赖于zookeeper集群（所以之前的zookeeper文章还是有点用的）。所有的broker在启动的时候都会往zookeeper进行注册，目的就是选举出一个controller，这个选举过程非常简单粗暴，就是一个谁先谁当的过程，不涉及什么算法问题。</p>
-<p>那成为controller之后要做啥呢，它会监听zookeeper里面的多个目录，例如有一个目录/brokers/，其他从节点往这个目录上<strong>注册（就是往这个目录上创建属于自己的子目录而已）</strong> 自己，这时命名规则一般是它们的id编号，比如/brokers/0,1,2</p>
-<p>注册时各个节点必定会暴露自己的主机名，端口号等等的信息，此时controller就要去<strong>读取注册上来的从节点的数据（通过监听机制），生成集群的元数据信息，之后把这些信息都分发给其他的服务器，让其他服务器能感知到集群中其它成员的存在</strong> 。</p>
-<p>此时模拟一个场景，我们创建一个主题（其实就是在zookeeper上/topics/topicA这样创建一个目录而已），kafka会把分区方案生成在这个目录中，此时controller就监听到了这一改变，它会去同步这个目录的元信息，然后同样下放给它的从节点，通过这个方法让整个集群都得知这个分区方案，此时从节点就各自创建好目录等待创建分区副本即可。这也是整个集群的管理机制。</p>
-<h2 id="加餐时间"><a href="#加餐时间" class="headerlink" title="加餐时间"></a>加餐时间</h2><h2 id="1-Kafka性能好在什么地方？"><a href="#1-Kafka性能好在什么地方？" class="headerlink" title="1.Kafka性能好在什么地方？"></a>1.Kafka性能好在什么地方？</h2><h3 id="①-顺序写"><a href="#①-顺序写" class="headerlink" title="① 顺序写"></a>① 顺序写</h3><p>操作系统每次从磁盘读写数据的时候，需要先寻址，也就是先要找到数据在磁盘上的物理位置，然后再进行数据读写，如果是机械硬盘，寻址就需要较长的时间。kafka的设计中，数据其实是存储在磁盘上面，一般来说，会把数据存储在内存上面性能才会好。但是kafka用的是顺序写，追加数据是追加到末尾，磁盘顺序写的性能极高，在磁盘个数一定，转数达到一定的情况下，基本和内存速度一致</p>
-<p>随机写的话是在文件的某个位置修改数据，性能会较低。</p>
-<h3 id="②-零拷贝"><a href="#②-零拷贝" class="headerlink" title="② 零拷贝"></a>② 零拷贝</h3><p>先来看看非零拷贝的情况</p>
-<p><img src="https://pic2.zhimg.com/80/v2-ee7a1f19ae166325d0251f32bc7a49c9_720w.jpg" alt="img"></p>
-<p>可以看到数据的拷贝从内存拷贝到kafka服务进程那块，又拷贝到socket缓存那块，整个过程耗费的时间比较高，kafka利用了Linux的sendFile技术（NIO），省去了进程切换和一次数据拷贝，让性能变得更好。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-a16b6969abf868b330fbfb8901f1746a_720w.jpg" alt="img"></p>
-<h2 id="2-日志分段存储"><a href="#2-日志分段存储" class="headerlink" title="2.日志分段存储"></a>2.日志分段存储</h2><p>Kafka规定了一个分区内的.log文件最大为1G，做这个限制目的是为了方便把.log加载到内存去操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000000000000000.index00000000000000000000.log00000000000000000000.timeindex00000000000005367851.index00000000000005367851.log00000000000005367851.timeindex00000000000009936472.index00000000000009936472.log00000000000009936472.timeindex</span><br></pre></td></tr></table></figure>
-
-<p>这个9936472之类的数字，就是代表了这个日志段文件里包含的起始offset，也就说明这个分区里至少都写入了接近1000万条数据了。Kafka broker有一个参数，log.segment.bytes，限定了每个日志段文件的大小，最大就是1GB，一个日志段文件满了，就自动开一个新的日志段文件来写入，避免单个文件过大，影响文件的读写性能，这个过程叫做log rolling，正在被写入的那个日志段文件，叫做active log segment。</p>
-<p>如果大家有看前面的两篇有关于HDFS的文章时，就会发现NameNode的edits log也会做出限制，所以这些框架都是会考虑到这些问题。</p>
-<h2 id="3-Kafka的网络设计"><a href="#3-Kafka的网络设计" class="headerlink" title="3.Kafka的网络设计"></a>3.Kafka的网络设计</h2><p>kafka的网络设计和Kafka的调优有关，这也是为什么它能支持高并发的原因</p>
-<p><img src="https://pic2.zhimg.com/80/v2-ff67587f49d58e9d78a4185a54570ded_720w.jpg" alt="img"></p>
-<p>首先客户端发送请求全部会先发送给一个Acceptor，broker里面会存在3个线程（默认是3个），这3个线程都是叫做processor，Acceptor不会对客户端的请求做任何的处理，直接封装成一个个socketChannel发送给这些processor形成一个队列，发送的方式是轮询，就是先给第一个processor发送，然后再给第二个，第三个，然后又回到第一个。消费者线程去消费这些socketChannel时，会获取一个个request请求，这些request请求中就会伴随着数据。</p>
-<p>线程池里面默认有8个线程，这些线程是用来处理request的，解析请求，如果request是写请求，就写到磁盘里。读的话返回结果。processor会从response中读取响应数据，然后再返回给客户端。这就是Kafka的网络三层架构。</p>
-<p>所以如果我们需要对kafka进行增强调优，增加processor并增加线程池里面的处理线程，就可以达到效果。request和response那一块部分其实就是起到了一个缓存的效果，是考虑到processor们生成请求太快，线程数不够不能及时处理的问题。</p>
-<p>所以这就是一个加强版的reactor网络线程模型。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/16/kafka-base/" data-id="ckacfykqi001ipzi0da7xc4gx" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/kafka/" rel="tag">kafka</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kafka-基础概念" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/15/kafka-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="article-date">
-  <time datetime="2020-05-15T12:24:17.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/15/kafka-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">kafka 基础概念</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/15/kafka-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" data-id="ckacfykpe000cpzi0eucm549q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kafka-单击测试" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/15/kafka-%E5%8D%95%E5%87%BB%E6%B5%8B%E8%AF%95/" class="article-date">
-  <time datetime="2020-05-15T11:36:39.000Z" itemprop="datePublished">2020-05-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/15/kafka-%E5%8D%95%E5%87%BB%E6%B5%8B%E8%AF%95/">kafka 单机测试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="如下教程用来本地测试kafka流式数据处理功能"><a href="#如下教程用来本地测试kafka流式数据处理功能" class="headerlink" title="如下教程用来本地测试kafka流式数据处理功能"></a>如下教程用来本地测试kafka流式数据处理功能</h2><h3 id="zookeeper-安装"><a href="#zookeeper-安装" class="headerlink" title="zookeeper 安装"></a>zookeeper 安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull wurstmeister&#x2F;zookeeper</span><br></pre></td></tr></table></figure>
-
-<h3 id="zookeeper启动"><a href="#zookeeper启动" class="headerlink" title="zookeeper启动"></a>zookeeper启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d --name zookeeper -p 2181 -t wurstmeister&#x2F;zookeeper</span><br></pre></td></tr></table></figure>
-
-<h3 id="kafka-安装"><a href="#kafka-安装" class="headerlink" title="kafka 安装"></a>kafka 安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull wurstmeister&#x2F;kafka</span><br><span class="line">sudo docker run -d --name kafka --publish 9092:9092 \</span><br><span class="line">--link zookeeper \</span><br><span class="line">--env KAFKA_ZOOKEEPER_CONNECT&#x3D;zookeeper:2181 \</span><br><span class="line">--env KAFKA_ADVERTISED_HOST_NAME&#x3D;127.0.0.1 \</span><br><span class="line">--env KAFKA_ADVERTISED_PORT&#x3D;9092 --restart&#x3D;always \</span><br><span class="line">--volume &#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime \</span><br><span class="line">wurstmeister&#x2F;kafka</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试发送消息"><a href="#测试发送消息" class="headerlink" title="测试发送消息"></a>测试发送消息</h3><p>kafka内部</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -i -t $&#123;CONTAINER ID&#125; sh </span><br><span class="line">cd opt&#x2F;kafka_2.12-2.1.0</span><br><span class="line">创建主题</span><br><span class="line">bin&#x2F;kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic mykafka</span><br><span class="line">创建生产者</span><br><span class="line">bin&#x2F;kafka-console-producer.sh --broker-list localhost:9092 --topic mykafka</span><br><span class="line"></span><br><span class="line">新tty</span><br><span class="line">创建消费者</span><br><span class="line">bin&#x2F;kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic mykafka --from-beginning</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/15/kafka-%E5%8D%95%E5%87%BB%E6%B5%8B%E8%AF%95/" data-id="ckacfykpc0009pzi0cny2159z" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-uwsgi-gunicorn-区别" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/05/10/uwsgi-gunicorn-%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time datetime="2020-05-10T14:29:55.000Z" itemprop="datePublished">2020-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/05/10/uwsgi-gunicorn-%E5%8C%BA%E5%88%AB/">uwsgi gunicorn 区别</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://zhu327.github.io/2018/08/29/gunicorn与uwsgi之我见/" target="_blank" rel="noopener">https://zhu327.github.io/2018/08/29/gunicorn%E4%B8%8Euwsgi%E4%B9%8B%E6%88%91%E8%A7%81/</a></p>
-<p><a href="https://blog.csdn.net/shudaqi2010/article/details/71172683" target="_blank" rel="noopener">https://blog.csdn.net/shudaqi2010/article/details/71172683</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://hackerman-ops.github.io/blog/2020/05/10/uwsgi-gunicorn-%E5%8C%BA%E5%88%AB/" data-id="ckacfykpn000spzi0b7d2et2l" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -754,7 +700,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/process/" rel="tag">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python-kafka/" rel="tag">python kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Django/" rel="tag">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/process/" rel="tag">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python-kafka/" rel="tag">python kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redis/" rel="tag">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
     </div>
   </div>
 
@@ -764,7 +710,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/Django/" style="font-size: 10px;">Django</a> <a href="/blog/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/blog/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/process/" style="font-size: 10px;">process</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/python-kafka/" style="font-size: 10px;">python kafka</a> <a href="/blog/tags/redis/" style="font-size: 10px;">redis</a> <a href="/blog/tags/web/" style="font-size: 10px;">web</a> <a href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 16.67px;">中间件</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 13.33px;">数据结构</a>
+      <a href="/blog/tags/Django/" style="font-size: 16.67px;">Django</a> <a href="/blog/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/blog/tags/linux/" style="font-size: 16.67px;">linux</a> <a href="/blog/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/blog/tags/process/" style="font-size: 10px;">process</a> <a href="/blog/tags/python/" style="font-size: 20px;">python</a> <a href="/blog/tags/python-kafka/" style="font-size: 10px;">python kafka</a> <a href="/blog/tags/redis/" style="font-size: 16.67px;">redis</a> <a href="/blog/tags/web/" style="font-size: 10px;">web</a> <a href="/blog/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 16.67px;">中间件</a> <a href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" style="font-size: 10px;">分布式</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/blog/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 13.33px;">数据结构</a>
     </div>
   </div>
 
@@ -786,23 +732,23 @@
       <ul>
         
           <li>
-            <a href="/blog/2020/05/17/django-%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/">django 安全编码问题</a>
+            <a href="/blog/2020/05/24/django-%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88%E5%9B%BE/">django 架构总览图</a>
           </li>
         
           <li>
-            <a href="/blog/2020/05/17/django-sql%E6%B3%A8%E5%85%A5/">django sql注入</a>
+            <a href="/blog/2020/05/24/django-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">django 启动过程</a>
           </li>
         
           <li>
-            <a href="/blog/2020/05/17/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%89%AF%E5%A5%BDAPI/">如何设计良好API</a>
+            <a href="/blog/2020/05/23/redis-interview/">redis interview</a>
           </li>
         
           <li>
-            <a href="/blog/2020/05/17/python-interview/">python interview</a>
+            <a href="/blog/2020/05/22/redis-API-test/">redis API test</a>
           </li>
         
           <li>
-            <a href="/blog/2020/05/16/faust-demo/">faust demo</a>
+            <a href="/blog/2020/05/18/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">分布式锁</a>
           </li>
         
       </ul>
